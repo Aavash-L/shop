@@ -40,6 +40,10 @@ body{
   overflow-x:hidden;
   -webkit-font-smoothing:antialiased;
 }
+#snow-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:9998;
+}
 
 /* ====== LOADING SCREEN ====== */
 .loader-overlay{
@@ -809,8 +813,13 @@ section{padding:100px 60px}
 @media(max-width:480px){
   .cart-drawer{max-width:100%}
 }
+#snow-canvas{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:1;
+}
 </style>
 </head>
+<body>
 <!-- CART MODAL -->
 <div class="cart-overlay" id="cartModal">
   <div class="cart-drawer">
@@ -879,6 +888,7 @@ section{padding:100px 60px}
 
 <!-- HERO -->
 <section class="hero" id="home">
+  <canvas id="snow-canvas"></canvas>
   <div class="hero-bg"></div>
   <div class="hero-grid"></div>
   <div class="hero-particles" id="particles"></div>
@@ -1322,6 +1332,7 @@ section{padding:100px 60px}
       <a href="#">Discord</a>
       <a href="#">Social Media</a>
       <a href="#">Roblox</a>
+      <a href="#">Tools</a>
     </div>
     <div class="footer-col">
       <h4>Support</h4>
@@ -1407,30 +1418,77 @@ const DEFAULT_PRODUCTS = [
     desc:'Discord token valid for 3 months.', status:'active'
   },
   {
-    id:5, name:'Spotify Premium', price:3.00, stock:100, category:'Streaming', emoji:'🎵',
-    desc:'Premium music streaming experience.', status:'active',
+    id:5, name:'Spotify Services', price:3.00, stock:100, category:'Streaming', emoji:'🎵',
+    desc:'Premium music streaming and promotion.', status:'active',
     options: [
       {
-        name: 'Plan',
+        name: 'Type',
         choices: [
           { label: '2 Months', value: '2m', price: 3.00 },
           { label: '3 Months', value: '3m', price: 4.50 },
-          { label: 'Lifetime', value: 'life', price: 15.00 }
+          { label: 'Lifetime', value: 'life', price: 15.00 },
+          { label: '1K Streams', value: '1k_streams', price: 5.00 },
+          { label: 'Playlist Followers', value: 'followers', price: 8.00 }
         ]
       }
     ]
   },
   {
-    id:6, name:'YouTube Premium', price:2.50, stock:100, category:'Streaming', emoji:'📺',
-    desc:'Ad-free YouTube and background play (1 Month).', status:'active'
+    id:6, name:'YouTube Services', price:2.50, stock:100, category:'Streaming', emoji:'📺',
+    desc:'Premium YouTube experience and channel growth.', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: '1 Month Premium', value: '1m', price: 2.50 },
+          { label: '1K Views', value: '1k_views', price: 3.00 },
+          { label: '1K Likes', value: '1k_likes', price: 1.50 },
+          { label: '1K Subscribers', value: '1k_subs', price: 10.00 }
+        ]
+      }
+    ]
   },
   {
-    id:7, name:'Netflix Lifetime', price:20.00, stock:50, category:'Streaming', emoji:'🎥',
-    desc:'Permanent Netflix access.', status:'active'
+    id:7, name:'Netflix', price:5.00, stock:50, category:'Streaming', emoji:'🎥',
+    desc:'High-quality Netflix accounts.', status:'active',
+    options: [
+      {
+        name: 'Duration',
+        choices: [
+          { label: '1 Month', value: '1m', price: 5.00 },
+          { label: '3 Months', value: '3m', price: 12.00 },
+          { label: 'Lifetime', value: 'life', price: 25.00 }
+        ]
+      }
+    ]
   },
   {
-    id:8, name:'Disney+ Lifetime', price:15.00, stock:50, category:'Streaming', emoji:'🎬',
-    desc:'Permanent Disney+ access.', status:'active'
+    id:8, name:'Disney+', price:4.00, stock:50, category:'Streaming', emoji:'🎬',
+    desc:'Premium Disney+ access.', status:'active',
+    options: [
+      {
+        name: 'Duration',
+        choices: [
+          { label: '1 Month', value: '1m', price: 4.00 },
+          { label: '3 Months', value: '3m', price: 10.00 },
+          { label: 'Lifetime', value: 'life', price: 20.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:9, name:'Paramount+', price:3.00, stock:50, category:'Streaming', emoji:'🏔️',
+    desc:'Exclusive shows and movies.', status:'active',
+    options: [
+      {
+        name: 'Duration',
+        choices: [
+          { label: '1 Month', value: '1m', price: 3.00 },
+          { label: '3 Months', value: '3m', price: 8.00 },
+          { label: 'Lifetime', value: 'life', price: 18.00 }
+        ]
+      }
+    ]
   },
   {
     id:10, name:'CapCut Lifetime', price:12.00, stock:50, category:'Software', emoji:'✂️',
@@ -1451,36 +1509,59 @@ const DEFAULT_PRODUCTS = [
     ]
   },
   {
-    id:12, name:'Steam Account', price:15.00, stock:20, category:'Gaming', emoji:'🎮',
-    desc:'Full access gaming account.', status:'active'
-  },
-  {
-    id:13, name:'Xbox Game Pass', price:4.00, stock:50, category:'Gaming', emoji:'🎮',
-    desc:'Access to hundreds of games (1 Month).', status:'active'
-  },
-  {
-    id:14, name:'Ulta Accounts', price:10.00, stock:10, category:'Accounts', emoji:'🛍️',
-    desc:'Ulta accounts with various balances.', status:'active',
+    id:12, name:'Gaming Accounts', price:15.00, stock:20, category:'Gaming', emoji:'🎮',
+    desc:'Full access gaming accounts.', status:'active',
     options: [
       {
-        name: 'Balance',
+        name: 'Type',
         choices: [
-          { label: '$70-$120', value: '70-120', price: 10.00 },
-          { label: '$200-$300', value: '200-300', price: 25.00 },
-          { label: '$300-$400', value: '300-400', price: 35.00 }
+          { label: 'Steam Account (FA)', value: 'steam_fa', price: 15.00 },
+          { label: 'Xbox Game Pass (1 Month)', value: 'xbox_1m', price: 4.00 }
         ]
       }
     ]
   },
   {
-    id:15, name:'Other Accounts', price:5.00, stock:20, category:'Accounts', emoji:'🛍️',
-    desc:'Miscellaneous store accounts with balances.', status:'active',
+    id:13, name:'Discord Products', price:1.80, stock:999, category:'Discord', emoji:'💎',
+    desc:'Exclusive Discord enhancements.', status:'active',
     options: [
       {
-        name: 'Balance Range',
+        name: 'Type',
         choices: [
-          { label: '$30-$50', value: '30-50', price: 5.00 },
-          { label: '$50-$70', value: '50-70', price: 8.00 }
+          { label: 'Nitro (1 Month)', value: 'nitro_1m', price: 1.80 },
+          { label: '14x Boost (1 Month)', value: 'boost_1m', price: 5.00 },
+          { label: 'Nitro Giftlink (1 Month)', value: 'giftlink_1m', price: 4.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:14, name:'Roblox Accounts', price:5.00, stock:500, category:'Roblox', emoji:'🤖',
+    desc:'Premium Roblox accounts for all needs.', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: 'VC Account', value: 'vc', price: 10.00 },
+          { label: 'Aged Account', value: 'aged', price: 8.00 },
+          { label: 'ALT Account', value: 'alt', price: 2.00 },
+          { label: 'Bulk Accounts', value: 'bulk', price: 15.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:15, name:'Store Accounts', price:5.00, stock:100, category:'Accounts', emoji:'🛍️',
+    desc:'Retail accounts with balances.', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: 'Ulta ($70-$120)', value: 'ulta_low', price: 10.00 },
+          { label: 'Ulta ($200-$300)', value: 'ulta_mid', price: 25.00 },
+          { label: 'Ulta ($300-$400)', value: 'ulta_high', price: 35.00 },
+          { label: 'Other ($30-$50)', value: 'other_low', price: 5.00 },
+          { label: 'Other ($50-$70)', value: 'other_high', price: 8.00 }
         ]
       }
     ]
@@ -1492,10 +1573,10 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Type',
         choices: [
-          { label: '1K Views', value: 'views', price: 0.50 },
-          { label: '1K Shares', value: 'shares', price: 1.50 },
-          { label: '1K Likes', value: 'likes', price: 2.00 },
-          { label: '1K Followers [REAL]', value: 'followers', price: 5.00 }
+          { label: '1K Views', value: '1k_views', price: 0.50 },
+          { label: '10K Views', value: '10k_views', price: 4.00 },
+          { label: '1K Likes', value: '1k_likes', price: 2.00 },
+          { label: '1K Followers', value: '1k_followers', price: 5.00 }
         ]
       }
     ]
@@ -1507,9 +1588,28 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Type',
         choices: [
-          { label: '1K Views', value: 'views', price: 0.80 },
+          { label: '1K Followers', value: 'followers', price: 3.00 },
           { label: '1K Likes', value: 'likes', price: 1.50 },
-          { label: '1K Followers', value: 'followers', price: 3.00 }
+          { label: '10K Views', value: 'views_10k', price: 6.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:18, name:'Discord Accounts', price:5.00, stock:100, category:'Discord', emoji:'👤',
+    desc:'Verified Discord accounts (EV).', status:'active'
+  },
+  {
+    id:19, name:'Digital Tools', price:10.00, stock:999, category:'Tools', emoji:'💻',
+    desc:'Powerful software and generators (Lifetime).', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: 'Amazon Generator', value: 'amazon_gen', price: 15.00 },
+          { label: 'EV Token Generator', value: 'token_gen', price: 20.00 },
+          { label: 'Server Cloner', value: 'cloner', price: 10.00 },
+          { label: 'Status Rotator', value: 'rotator', price: 5.00 }
         ]
       }
     ]
@@ -1519,9 +1619,9 @@ const DEFAULT_PRODUCTS = [
 function loadProducts() {
   try {
     const version = localStorage.getItem('snow_consolidated');
-    if (version !== 'v1') {
+    if (version !== 'v2') {
       localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-      localStorage.setItem('snow_consolidated', 'v1');
+      localStorage.setItem('snow_consolidated', 'v2');
       return DEFAULT_PRODUCTS;
     }
     const saved = localStorage.getItem('snow_products');
@@ -2013,6 +2113,68 @@ function checkoutFromCart(){
     document.body.style.overflow = 'hidden';
   }, 300);
 }
+
+// ====== LUXURY SNOW EFFECT ======
+const canvas = document.getElementById('snow-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+
+function initSnow() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  particles = [];
+  const count = Math.floor(canvas.width / 10);
+  for (let i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2 + 1,
+      density: Math.random() * 0.5 + 0.5,
+      opacity: Math.random() * 0.5 + 0.2,
+      velocity: (Math.random() * 1.5 + 0.5)
+    });
+  }
+}
+
+function drawSnow() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+  ctx.beginPath();
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    ctx.moveTo(p.x, p.y);
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2, true);
+  }
+  ctx.fill();
+  updateSnow();
+}
+
+function updateSnow() {
+  for (let i = 0; i < particles.length; i++) {
+    const p = particles[i];
+    p.y += p.velocity;
+    p.x += Math.sin(p.y / 50) * 0.5;
+    if (p.y > canvas.height) {
+      particles[i] = {
+        x: Math.random() * canvas.width,
+        y: -10,
+        radius: p.radius,
+        density: p.density,
+        opacity: p.opacity,
+        velocity: p.velocity
+      };
+    }
+  }
+}
+
+function animateSnow() {
+  drawSnow();
+  requestAnimationFrame(animateSnow);
+}
+
+window.addEventListener('resize', initSnow);
+initSnow();
+animateSnow();
 </script>
 </body>
 </html>
