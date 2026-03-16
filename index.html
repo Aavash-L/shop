@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Snow's Shop — Premium Digital Marketplace</title>
+<link rel="icon" href="/snows.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Sora:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg-primary:#0a0a0f;
+  --bg-secondary:#111118;
+  --bg-card:#16161f;
+  --bg-card-hover:#1c1c28;
+  --border:#1e1e2e;
+  --border-hover:#2a2a3e;
+  --text-primary:#f0f0f5;
+  --text-secondary:#8a8a9e;
+  --text-muted:#5a5a6e;
+  --accent:#6c5ce7;
+  --accent-light:#a29bfe;
+  --accent-glow:rgba(108,92,231,0.3);
+  --accent-subtle:rgba(108,92,231,0.08);
+  --green:#00d2a0;
+  --green-glow:rgba(0,210,160,0.25);
+  --gold:#f5c542;
+  --radius:14px;
+  --radius-sm:10px;
+  --radius-xs:6px;
+  --transition:0.3s cubic-bezier(0.4,0,0.2,1);
+  --font-display:'Sora',sans-serif;
+  --font-body:'Outfit',sans-serif;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:var(--font-body);
+  background:var(--bg-primary);
+  color:var(--text-primary);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ====== LOADING SCREEN ====== */
+.loader-overlay{
+  position:fixed;inset:0;z-index:10000;
+  background:var(--bg-primary);
+  display:flex;align-items:center;justify-content:center;
+  transition:opacity 0.6s ease, visibility 0.6s ease;
+}
+.loader-overlay.hidden{opacity:0;visibility:hidden;pointer-events:none}
+.loader-content{text-align:center}
+.loader-logo{
+  font-family:var(--font-display);font-size:2rem;font-weight:800;
+  letter-spacing:-0.5px;color:var(--text-primary);
+  opacity:0;transform:translateY(20px) scale(0.9);
+  animation:logoReveal 0.8s 0.2s forwards cubic-bezier(0.16,1,0.3,1);
+}
+.loader-logo span{color:var(--accent-light)}
+.loader-glow{
+  width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);
+  position:absolute;filter:blur(30px);
+  animation:loaderPulse 1.2s ease-in-out infinite alternate;
+}
+.loader-ring{
+  width:60px;height:60px;border-radius:50%;
+  border:2px solid var(--border);
+  border-top-color:var(--accent-light);
+  animation:spin 0.8s linear infinite;
+  margin:0 auto 20px;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes logoReveal{to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes loaderPulse{0%{opacity:0.3;transform:scale(0.8)}100%{opacity:0.7;transform:scale(1.2)}}
+
+/* ====== NAVBAR ====== */
+.navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  padding:0 40px;height:72px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(10,10,15,0.7);
+  backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(30,30,46,0.5);
+  transition:var(--transition);
+}
+.navbar.scrolled{background:rgba(10,10,15,0.92);border-bottom-color:var(--border)}
+.nav-brand{
+  font-family:var(--font-display);font-size:1.3rem;font-weight:800;
+  letter-spacing:-0.5px;color:var(--text-primary);text-decoration:none;
+  display:flex;align-items:center;gap:8px;
+}
+.nav-brand span{color:var(--accent-light)}
+.nav-links{display:flex;align-items:center;gap:32px;list-style:none}
+.nav-links a{
+  color:var(--text-secondary);text-decoration:none;font-size:0.9rem;
+  font-weight:500;transition:var(--transition);position:relative;
+}
+.nav-links a:hover{color:var(--text-primary)}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;
+  background:var(--accent-light);border-radius:2px;transition:var(--transition);
+}
+.nav-links a:hover::after{width:100%}
+.nav-actions{display:flex;align-items:center;gap:16px}
+.nav-btn{
+  background:none;border:none;color:var(--text-secondary);cursor:pointer;
+  width:40px;height:40px;border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  transition:var(--transition);font-size:1.1rem;
+}
+.nav-btn:hover{background:var(--bg-card);color:var(--text-primary)}
+.nav-btn-primary{
+  background:var(--accent);color:white;padding:8px 18px;
+  border-radius:var(--radius-sm);font-size:0.85rem;font-weight:600;
+  border:none;cursor:pointer;transition:var(--transition);
+  font-family:var(--font-body);width:auto;
+}
+.nav-btn-primary:hover{background:#7d6ef0;transform:translateY(-1px)}
+.mobile-toggle{display:none;background:none;border:none;color:var(--text-primary);cursor:pointer;font-size:1.3rem}
+
+/* ====== HERO ====== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;
+  padding:120px 60px 80px;position:relative;overflow:hidden;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 50%,rgba(108,92,231,0.08) 0%,transparent 60%),
+    radial-gradient(ellipse 40% 40% at 80% 30%,rgba(0,210,160,0.04) 0%,transparent 50%);
+}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(30,30,46,0.15) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(30,30,46,0.15) 1px,transparent 1px);
+  background-size:60px 60px;
+  mask-image:radial-gradient(ellipse 70% 60% at 30% 50%,black,transparent);
+}
+.hero-particles{position:absolute;inset:0;overflow:hidden}
+.particle{
+  position:absolute;width:2px;height:2px;background:var(--accent-light);
+  border-radius:50%;opacity:0;animation:float-particle linear infinite;
+}
+@keyframes float-particle{
+  0%{opacity:0;transform:translateY(100vh) scale(0)}
+  10%{opacity:0.6}
+  90%{opacity:0.6}
+  100%{opacity:0;transform:translateY(-10vh) scale(1)}
+}
+.hero-content{max-width:680px;position:relative;z-index:2;margin:0 auto}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent-subtle);border:1px solid rgba(108,92,231,0.2);
+  padding:8px 16px;border-radius:100px;margin-bottom:28px;
+  font-size:0.82rem;font-weight:600;color:var(--accent-light);
+  letter-spacing:0.5px;text-transform:uppercase;
+}
+.hero-badge-dot{
+  width:6px;height:6px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 8px var(--green-glow);
+  animation:pulse-dot 2s infinite;
+}
+@keyframes pulse-dot{0%,100%{opacity:1}50%{opacity:0.4}}
+.hero h1{
+  font-family:var(--font-display);font-size:clamp(2.8rem,5.5vw,4.2rem);
+  font-weight:800;line-height:1.1;letter-spacing:-1.5px;
+  margin-bottom:20px;
+}
+.hero h1 .gradient-text{
+  background:linear-gradient(135deg,var(--accent-light),var(--green));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-desc{
+  font-size:1.1rem;line-height:1.7;color:var(--text-secondary);
+  margin-bottom:36px;max-width:520px;
+}
+.hero-ctas{display:flex;gap:14px;margin-bottom:48px;flex-wrap:wrap;justify-content:center}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:var(--radius-sm);
+  font-family:var(--font-body);font-size:0.95rem;font-weight:600;
+  cursor:pointer;transition:var(--transition);border:none;text-decoration:none;
+}
+.btn-primary{
+  background:var(--accent);color:white;
+  box-shadow:0 4px 20px var(--accent-glow);
+}
+.btn-primary:hover{background:#7d6ef0;transform:translateY(-2px);box-shadow:0 8px 30px var(--accent-glow)}
+.btn-secondary{
+  background:var(--bg-card);color:var(--text-primary);
+  border:1px solid var(--border);
+}
+.btn-secondary:hover{background:var(--bg-card-hover);border-color:var(--border-hover);transform:translateY(-2px)}
+.btn svg{width:18px;height:18px}
+.hero-stats{display:flex;gap:24px;flex-wrap:wrap;justify-content:center}
+.stat-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:16px 24px;min-width:130px;
+  transition:var(--transition);
+}
+.stat-card:hover{border-color:var(--border-hover);transform:translateY(-2px)}
+.stat-value{
+  font-family:var(--font-display);font-size:1.6rem;font-weight:700;
+  color:var(--text-primary);display:flex;align-items:center;gap:6px;
+}
+.stat-value .icon{font-size:0.9rem;color:var(--gold)}
+.stat-label{font-size:0.78rem;color:var(--text-muted);margin-top:2px;font-weight:500}
+
+/* ====== SECTION SHARED ====== */
+section{padding:100px 60px}
+.section-header{text-align:center;margin-bottom:60px}
+.section-tag{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:0.78rem;font-weight:600;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--accent-light);margin-bottom:14px;
+}
+.section-title{
+  font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.6rem);
+  font-weight:800;letter-spacing:-0.8px;margin-bottom:14px;
+}
+.section-desc{
+  color:var(--text-secondary);font-size:1rem;max-width:500px;margin:0 auto;line-height:1.7;
+}
+
+/* ====== CATEGORIES ====== */
+.categories-section{background:var(--bg-secondary)}
+.categories-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));
+  gap:20px;max-width:1200px;margin:0 auto;
+}
+.category-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;cursor:pointer;
+  transition:var(--transition);position:relative;
+}
+.category-card:hover{
+  border-color:var(--border-hover);transform:translateY(-4px);
+  box-shadow:0 12px 40px rgba(0,0,0,0.3);
+}
+.category-img{
+  height:180px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#1a1a2e,#16213e);
+}
+.category-img-inner{
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;
+  font-size:3rem;transition:var(--transition);
+}
+.category-card:hover .category-img-inner{transform:scale(1.05)}
+.category-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,var(--bg-card),transparent 60%);
+}
+.category-info{padding:20px}
+.category-title{font-family:var(--font-display);font-size:1.1rem;font-weight:700;margin-bottom:12px}
+.category-meta{display:flex;align-items:center;justify-content:space-between}
+.category-count{font-size:0.85rem;color:var(--text-secondary)}
+.category-price{font-size:0.9rem;font-weight:600;color:var(--accent-light)}
+.category-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  margin-top:10px;font-size:0.75rem;color:var(--green);font-weight:600;
+}
+.category-badge::before{
+  content:'';width:5px;height:5px;border-radius:50%;
+  background:var(--green);box-shadow:0 0 6px var(--green-glow);
+}
+
+/* ====== PRODUCT PAGE (Modal-style) ====== */
+.product-showcase{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;
+}
+.product-media{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;aspect-ratio:1;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;
+}
+.product-media-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(108,92,231,0.1),rgba(0,210,160,0.05));
+}
+.product-media-icon{font-size:5rem;position:relative;z-index:1}
+.product-details h2{
+  font-family:var(--font-display);font-size:2rem;font-weight:800;
+  letter-spacing:-0.5px;margin-bottom:8px;
+}
+.product-price-row{display:flex;align-items:center;gap:16px;margin-bottom:20px}
+.product-price{
+  font-family:var(--font-display);font-size:1.8rem;font-weight:700;
+  color:var(--accent-light);
+}
+.product-stock{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:100px;font-size:0.78rem;font-weight:600;
+  background:rgba(0,210,160,0.1);color:var(--green);
+  border:1px solid rgba(0,210,160,0.2);
+}
+.product-stock::before{
+  content:'';width:5px;height:5px;border-radius:50%;background:var(--green);
+  box-shadow:0 0 6px var(--green-glow);
+}
+.product-desc{color:var(--text-secondary);line-height:1.7;margin-bottom:24px;font-size:0.95rem}
+.product-qty{
+  display:flex;align-items:center;gap:12px;margin-bottom:20px;
+}
+.product-qty label{font-size:0.85rem;color:var(--text-secondary);font-weight:500}
+.qty-controls{
+  display:flex;align-items:center;border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;
+}
+.qty-btn{
+  background:var(--bg-card);border:none;color:var(--text-primary);
+  width:38px;height:38px;cursor:pointer;font-size:1rem;
+  transition:var(--transition);display:flex;align-items:center;justify-content:center;
+}
+.qty-btn:hover{background:var(--bg-card-hover)}
+.qty-value{
+  width:44px;text-align:center;background:var(--bg-secondary);
+  border:none;color:var(--text-primary);font-size:0.95rem;
+  font-family:var(--font-display);font-weight:600;height:38px;line-height:38px;
+  border-left:1px solid var(--border);border-right:1px solid var(--border);
+}
+.product-actions{display:flex;gap:12px;margin-bottom:28px}
+.product-actions .btn{flex:1;justify-content:center;padding:16px}
+.product-features{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;
+}
+.product-feature{
+  display:flex;align-items:center;gap:10px;
+  padding:12px;border-radius:var(--radius-xs);
+  background:var(--bg-card);border:1px solid var(--border);
+  font-size:0.84rem;color:var(--text-secondary);
+}
+.product-feature-icon{
+  width:32px;height:32px;border-radius:8px;
+  background:var(--accent-subtle);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.85rem;flex-shrink:0;
+}
+.live-indicator{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.82rem;color:var(--text-muted);margin-bottom:20px;
+}
+.live-dot{
+  width:6px;height:6px;border-radius:50%;background:#ff6b6b;
+  animation:pulse-dot 1.5s infinite;
+}
+
+/* ====== TRUST / WHY US ====== */
+.trust-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:20px;max-width:1200px;margin:0 auto;
+}
+.trust-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px;transition:var(--transition);
+  position:relative;overflow:hidden;
+}
+.trust-card:hover{border-color:var(--border-hover);transform:translateY(-3px)}
+.trust-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--green));
+  opacity:0;transition:var(--transition);
+}
+.trust-card:hover::before{opacity:1}
+.trust-icon{
+  width:48px;height:48px;border-radius:12px;
+  background:var(--accent-subtle);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;margin-bottom:16px;
+}
+.trust-card h3{
+  font-family:var(--font-display);font-size:1.05rem;font-weight:700;
+  margin-bottom:8px;
+}
+.trust-card p{font-size:0.88rem;color:var(--text-secondary);line-height:1.6}
+
+/* ====== TESTIMONIALS ====== */
+.testimonials-section{background:var(--bg-secondary)}
+.testimonials-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:20px;max-width:1200px;margin:0 auto;
+}
+.testimonial-card{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius);padding:28px;transition:var(--transition);
+}
+.testimonial-card:hover{border-color:var(--border-hover);transform:translateY(-2px)}
+.testimonial-stars{margin-bottom:14px;color:var(--gold);font-size:0.9rem;letter-spacing:2px}
+.testimonial-text{
+  font-size:0.92rem;color:var(--text-secondary);line-height:1.7;
+  margin-bottom:18px;font-style:italic;
+}
+.testimonial-author{display:flex;align-items:center;gap:12px}
+.testimonial-avatar{
+  width:38px;height:38px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent),var(--green));
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;font-weight:700;color:white;
+}
+.testimonial-name{font-size:0.88rem;font-weight:600}
+.testimonial-date{font-size:0.75rem;color:var(--text-muted)}
+
+/* ====== SOCIAL PROOF BAR ====== */
+.proof-bar{
+  background:linear-gradient(135deg,rgba(108,92,231,0.08),rgba(0,210,160,0.04));
+  border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+  padding:40px 60px;
+}
+.proof-bar-inner{
+  max-width:900px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-around;flex-wrap:wrap;gap:30px;
+}
+.proof-item{text-align:center}
+.proof-value{
+  font-family:var(--font-display);font-size:2.2rem;font-weight:800;
+  background:linear-gradient(135deg,var(--text-primary),var(--accent-light));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.proof-label{font-size:0.82rem;color:var(--text-muted);margin-top:4px;font-weight:500}
+
+/* ====== CTA SECTION ====== */
+.cta-section{
+  text-align:center;position:relative;overflow:hidden;
+}
+.cta-glow{
+  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:500px;height:300px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent-glow) 0%,transparent 70%);
+  filter:blur(80px);pointer-events:none;
+}
+.cta-section h2{
+  font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);
+  font-weight:800;letter-spacing:-1px;margin-bottom:16px;position:relative;
+}
+.cta-section p{
+  color:var(--text-secondary);font-size:1.05rem;margin-bottom:32px;
+  max-width:460px;margin-left:auto;margin-right:auto;line-height:1.7;position:relative;
+}
+.cta-section .btn{position:relative}
+
+/* ====== FOOTER ====== */
+.footer{
+  background:var(--bg-secondary);border-top:1px solid var(--border);
+  padding:60px 60px 30px;
+}
+.footer-grid{
+  max-width:1200px;margin:0 auto;
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
+  margin-bottom:40px;
+}
+.footer-brand{
+  font-family:var(--font-display);font-size:1.2rem;font-weight:800;
+  margin-bottom:12px;
+}
+.footer-brand span{color:var(--accent-light)}
+.footer-desc{font-size:0.85rem;color:var(--text-secondary);line-height:1.7;max-width:280px}
+.footer-col h4{
+  font-family:var(--font-display);font-size:0.85rem;font-weight:700;
+  margin-bottom:16px;text-transform:uppercase;letter-spacing:1px;
+  color:var(--text-muted);
+}
+.footer-col a{
+  display:block;color:var(--text-secondary);text-decoration:none;
+  font-size:0.88rem;margin-bottom:10px;transition:var(--transition);
+}
+.footer-col a:hover{color:var(--text-primary)}
+.footer-bottom{
+  max-width:1200px;margin:0 auto;
+  border-top:1px solid var(--border);padding-top:24px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:0.8rem;color:var(--text-muted);flex-wrap:wrap;gap:12px;
+}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{color:var(--text-muted);text-decoration:none;transition:var(--transition)}
+.footer-legal a:hover{color:var(--text-secondary)}
+
+/* ====== SCROLL ANIMATIONS ====== */
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.reveal-delay-1{transition-delay:0.1s}
+.reveal-delay-2{transition-delay:0.2s}
+.reveal-delay-3{transition-delay:0.3s}
+.reveal-delay-4{transition-delay:0.4s}
+.reveal-delay-5{transition-delay:0.5s}
+
+/* ====== MOBILE ====== */
+@media(max-width:1024px){
+  .product-showcase{grid-template-columns:1fr;gap:30px}
+  .footer-grid{grid-template-columns:1fr 1fr;gap:30px}
+}
+@media(max-width:768px){
+  section{padding:70px 24px}
+  .hero{padding:100px 24px 60px}
+  .navbar{padding:0 20px}
+  .nav-links{display:none}
+  .mobile-toggle{display:block}
+  .categories-grid{grid-template-columns:1fr}
+  .trust-grid{grid-template-columns:1fr}
+  .testimonials-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr;gap:24px}
+  .hero-stats{flex-direction:column;gap:12px}
+  .stat-card{min-width:auto}
+  .product-features{grid-template-columns:1fr}
+  .product-actions{flex-direction:column}
+  .proof-bar{padding:30px 24px}
+  .proof-bar-inner{justify-content:center}
+  .hero-ctas{flex-direction:column}
+  .btn{width:100%;justify-content:center}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+
+/* ====== MOBILE NAV DRAWER ====== */
+.mobile-nav{
+  position:fixed;inset:0;z-index:9999;
+  background:rgba(10,10,15,0.95);
+  backdrop-filter:blur(20px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:24px;opacity:0;visibility:hidden;transition:var(--transition);
+}
+.mobile-nav.open{opacity:1;visibility:visible}
+.mobile-nav a{
+  font-family:var(--font-display);font-size:1.5rem;font-weight:700;
+  color:var(--text-primary);text-decoration:none;transition:var(--transition);
+}
+.mobile-nav a:hover{color:var(--accent-light)}
+.mobile-nav-close{
+  position:absolute;top:20px;right:20px;background:none;border:none;
+  color:var(--text-primary);font-size:1.5rem;cursor:pointer;
+}
+/* ====== PRODUCT MODAL ====== */
+.modal-overlay{
+  position:fixed;inset:0;z-index:10000;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transition:var(--transition);
+  padding:20px;
+}
+.modal-overlay.open{opacity:1;visibility:visible}
+.modal{
+  background:var(--bg-secondary);border:1px solid var(--border);
+  border-radius:var(--radius);max-width:820px;width:100%;
+  max-height:90vh;overflow-y:auto;position:relative;
+  transform:translateY(20px) scale(0.97);transition:var(--transition);
+}
+.modal-overlay.open .modal{transform:translateY(0) scale(1)}
+.modal-close{
+  position:absolute;top:16px;right:16px;z-index:2;
+  background:var(--bg-card);border:1px solid var(--border);
+  color:var(--text-secondary);width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:1.1rem;transition:var(--transition);
+}
+.modal-close:hover{background:var(--bg-card-hover);color:var(--text-primary)}
+.modal-body{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.modal-media{
+  padding:40px;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(135deg,rgba(108,92,231,0.08),rgba(0,210,160,0.04));
+  border-right:1px solid var(--border);min-height:300px;
+}
+.modal-media-icon{font-size:5rem}
+.modal-info{padding:32px}
+.modal-info h2{
+  font-family:var(--font-display);font-size:1.5rem;font-weight:800;
+  letter-spacing:-0.5px;margin-bottom:6px;
+}
+.modal-live{
+  display:flex;align-items:center;gap:8px;
+  font-size:0.78rem;color:var(--text-muted);margin-bottom:16px;
+}
+.modal-live .live-dot{width:6px;height:6px;border-radius:50%;background:#ff6b6b;animation:pulse-dot 1.5s infinite}
+.modal-price-row{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.modal-price{font-family:var(--font-display);font-size:1.6rem;font-weight:700;color:var(--accent-light)}
+.modal-stock{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:100px;font-size:0.75rem;font-weight:600;
+  background:rgba(0,210,160,0.1);color:var(--green);border:1px solid rgba(0,210,160,0.2);
+}
+.modal-stock::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green-glow)}
+.modal-desc{font-size:0.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:20px}
+.modal-qty{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.modal-qty label{font-size:0.84rem;color:var(--text-secondary);font-weight:500}
+.modal-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
+.modal-feature{
+  display:flex;align-items:center;gap:8px;padding:10px;
+  border-radius:var(--radius-xs);background:var(--bg-card);
+  border:1px solid var(--border);font-size:0.8rem;color:var(--text-secondary);
+}
+.modal-feature-icon{font-size:0.9rem}
+.modal-payments{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  margin-bottom:20px;padding-top:16px;border-top:1px solid var(--border);
+}
+.modal-payments-label{font-size:0.78rem;color:var(--text-muted);font-weight:500;width:100%;margin-bottom:2px}
+.pay-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:6px 14px;border-radius:8px;background:var(--bg-card);
+  border:1px solid var(--border);font-size:0.8rem;font-weight:600;color:var(--text-secondary);
+}
+.pay-dot{width:8px;height:8px;border-radius:50%}
+
+/* ====== CHECKOUT MODAL ====== */
+.checkout-steps{padding:32px}
+.checkout-step{display:none}
+.checkout-step.active{display:block}
+.checkout-header{
+  font-family:var(--font-display);font-size:1.3rem;font-weight:700;
+  margin-bottom:6px;
+}
+.checkout-sub{font-size:0.88rem;color:var(--text-secondary);margin-bottom:24px;line-height:1.6}
+.checkout-summary{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:20px;margin-bottom:24px;
+}
+.checkout-summary-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 0;font-size:0.9rem;
+}
+.checkout-summary-row.total{
+  border-top:1px solid var(--border);margin-top:8px;padding-top:14px;
+  font-weight:700;font-size:1rem;
+}
+.checkout-summary-row.total span:last-child{color:var(--accent-light);font-family:var(--font-display);font-size:1.2rem}
+.payment-options{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.payment-option{
+  display:flex;align-items:center;gap:14px;
+  padding:16px;border-radius:var(--radius-sm);
+  background:var(--bg-card);border:2px solid var(--border);
+  cursor:pointer;transition:var(--transition);
+}
+.payment-option:hover{border-color:var(--border-hover)}
+.payment-option.selected{border-color:var(--accent);background:var(--accent-subtle)}
+.payment-radio{
+  width:18px;height:18px;border-radius:50%;border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:var(--transition);
+}
+.payment-option.selected .payment-radio{border-color:var(--accent)}
+.payment-radio-inner{
+  width:8px;height:8px;border-radius:50%;background:var(--accent);
+  transform:scale(0);transition:var(--transition);
+}
+.payment-option.selected .payment-radio-inner{transform:scale(1)}
+.payment-icon{font-size:1.3rem;width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.payment-name{font-weight:600;font-size:0.95rem}
+.payment-handle{font-size:0.8rem;color:var(--text-muted)}
+
+/* Order confirmation */
+.order-success{text-align:center;padding:20px 0}
+.order-checkmark{
+  width:72px;height:72px;border-radius:50%;margin:0 auto 20px;
+  background:rgba(0,210,160,0.12);border:2px solid var(--green);
+  display:flex;align-items:center;justify-content:center;font-size:2rem;
+}
+.order-id-box{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:16px;margin:20px 0;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+}
+.order-id-value{
+  font-family:var(--font-display);font-size:1.1rem;font-weight:700;
+  color:var(--accent-light);letter-spacing:1px;
+}
+.copy-btn{
+  background:var(--accent-subtle);border:1px solid rgba(108,92,231,0.3);
+  color:var(--accent-light);padding:6px 14px;border-radius:var(--radius-xs);
+  font-size:0.8rem;font-weight:600;cursor:pointer;transition:var(--transition);
+  font-family:var(--font-body);
+}
+.copy-btn:hover{background:rgba(108,92,231,0.15)}
+.order-instructions{
+  background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-sm);padding:20px;margin:20px 0;text-align:left;
+}
+.order-instructions h4{
+  font-family:var(--font-display);font-size:0.95rem;font-weight:700;margin-bottom:12px;
+}
+.order-step{
+  display:flex;gap:12px;padding:10px 0;
+  border-bottom:1px solid var(--border);font-size:0.88rem;color:var(--text-secondary);line-height:1.6;
+}
+.order-step:last-child{border-bottom:none}
+.order-step-num{
+  width:24px;height:24px;border-radius:50%;flex-shrink:0;
+  background:var(--accent-subtle);color:var(--accent-light);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;font-weight:700;font-family:var(--font-display);
+}
+.discord-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:#5865F2;color:white;padding:14px 28px;
+  border-radius:var(--radius-sm);font-size:0.95rem;font-weight:600;
+  border:none;cursor:pointer;transition:var(--transition);
+  font-family:var(--font-body);margin-top:8px;text-decoration:none;
+}
+.discord-btn:hover{background:#4752c4;transform:translateY(-2px)}
+.checkout-progress{
+  display:flex;align-items:center;gap:0;margin-bottom:28px;
+}
+.progress-step{
+  display:flex;align-items:center;gap:8px;font-size:0.82rem;font-weight:600;color:var(--text-muted);
+}
+.progress-step.active{color:var(--accent-light)}
+.progress-step.done{color:var(--green)}
+.progress-dot{
+  width:28px;height:28px;border-radius:50%;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.75rem;font-family:var(--font-display);font-weight:700;
+  transition:var(--transition);
+}
+.progress-step.active .progress-dot{border-color:var(--accent);background:var(--accent-subtle);color:var(--accent-light)}
+.progress-step.done .progress-dot{border-color:var(--green);background:rgba(0,210,160,0.12);color:var(--green)}
+.progress-line{
+  flex:1;height:2px;background:var(--border);margin:0 8px;
+}
+.progress-line.done{background:var(--green)}
+
+@media(max-width:768px){
+  .modal-body{grid-template-columns:1fr}
+  .modal-media{min-height:180px;border-right:none;border-bottom:1px solid var(--border)}
+  .modal-features{grid-template-columns:1fr}
+}
+/* ====== CART MODAL ====== */
+.cart-overlay{
+  position:fixed;inset:0;z-index:10001;
+  background:rgba(0,0,0,0.7);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  display:flex;justify-content:flex-end;
+  opacity:0;visibility:hidden;transition:var(--transition);
+}
+.cart-overlay.open{opacity:1;visibility:visible}
+.cart-drawer{
+  width:100%;max-width:420px;background:var(--bg-secondary);
+  border-left:1px solid var(--border);height:100vh;
+  display:flex;flex-direction:column;
+  transform:translateX(100%);transition:0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.cart-overlay.open .cart-drawer{transform:translateX(0)}
+.cart-header{
+  padding:24px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.cart-header h3{font-family:var(--font-display);font-size:1.2rem;font-weight:800}
+.cart-close-btn{
+  background:var(--bg-card);border:1px solid var(--border);
+  color:var(--text-secondary);width:32px;height:32px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.cart-items{padding:24px;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:16px}
+.cart-item{
+  display:flex;gap:16px;padding:16px;background:var(--bg-card);
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  position:relative;
+}
+.cart-item-icon{font-size:1.5rem;width:48px;height:48px;background:var(--bg-secondary);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cart-item-info{flex:1}
+.cart-item-name{font-weight:700;font-size:0.95rem;margin-bottom:4px}
+.cart-item-details{font-size:0.8rem;color:var(--text-muted)}
+.cart-item-price{font-weight:600;color:var(--accent-light);font-size:0.9rem;margin-top:6px}
+.cart-item-remove{
+  position:absolute;top:12px;right:12px;cursor:pointer;
+  color:var(--text-muted);font-size:0.8rem;transition:var(--transition);
+}
+.cart-item-remove:hover{color:#ff6b6b}
+.cart-footer{padding:24px;border-top:1px solid var(--border);background:var(--bg-secondary)}
+.cart-total-row{display:flex;justify-content:space-between;margin-bottom:20px}
+.cart-total-label{font-size:0.95rem;font-weight:600;color:var(--text-secondary)}
+.cart-total-value{font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:var(--accent-light)}
+.cart-empty{text-align:center;padding:60px 24px;color:var(--text-muted)}
+.cart-empty-icon{font-size:3rem;margin-bottom:16px;opacity:0.3}
+
+@media(max-width:480px){
+  .cart-drawer{max-width:100%}
+}
+</style>
+</head>
+<!-- CART MODAL -->
+<div class="cart-overlay" id="cartModal">
+  <div class="cart-drawer">
+    <div class="cart-header">
+      <h3>Your Cart</h3>
+      <button class="cart-close-btn" onclick="closeModal('cartModal')">&times;</button>
+    </div>
+    <div class="cart-items" id="cartItemsList">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">&#128722;</div>
+        <p>Your cart is empty</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-total-row">
+        <span class="cart-total-label">Subtotal</span>
+        <span class="cart-total-value" id="cartTotalDisplay">$0.00</span>
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="checkoutFromCart()">
+        Checkout Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING SCREEN -->
+<div class="loader-overlay" id="loader">
+  <div class="loader-content">
+    <div class="loader-glow"></div>
+    <div class="loader-ring"></div>
+    <div class="loader-logo">Snow's <span>Shop</span></div>
+  </div>
+</div>
+
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="mobile-nav-close" onclick="document.getElementById('mobileNav').classList.remove('open')">&#10005;</button>
+  <a href="#home" onclick="document.getElementById('mobileNav').classList.remove('open')">Home</a>
+  <a href="#products" onclick="document.getElementById('mobileNav').classList.remove('open')">Products</a>
+  <a href="#reviews" onclick="document.getElementById('mobileNav').classList.remove('open')">Reviews</a>
+  <a href="#trust" onclick="document.getElementById('mobileNav').classList.remove('open')">Why Us</a>
+  <a href="#">Status</a>
+  <a href="#">Blog</a>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="nav-brand">Snow's <span>Shop</span></a>
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#">Status</a></li>
+    <li><a href="#">Blog</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="nav-btn" title="Cart" style="position:relative" onclick="openCart()">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+      <span id="cartCount" style="position:absolute;top:-2px;right:-2px;width:16px;height:16px;background:var(--accent);border-radius:50%;font-size:0.6rem;display:flex;align-items:center;justify-content:center;font-weight:700">0</span>
+    </button>
+    <button class="mobile-toggle" onclick="document.getElementById('mobileNav').classList.add('open')">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-badge reveal">
+      <span class="hero-badge-dot"></span>
+      Specialized in Quality Services
+    </div>
+    <h1 class="reveal reveal-delay-1">
+      Your Premium<br><span class="gradient-text">Digital Market</span><br>at Unbeatable Rates
+    </h1>
+    <p class="hero-desc reveal reveal-delay-2">
+      Elevate your experience with our curated digital services. Instant delivery, verified quality, and 24/7 support — all at prices that make sense.
+    </p>
+    <div class="hero-ctas reveal reveal-delay-3">
+      <a href="#products" class="btn btn-primary">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+        Shop Now
+      </a>
+      <a href="https://discord.gg/FMxy3VBE" target="_blank" class="btn btn-secondary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 00-.079.036c-.21.369-.444.85-.608 1.23a18.566 18.566 0 00-5.487 0 12.36 12.36 0 00-.617-1.23A.077.077 0 008.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 00-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 00.031.055 20.03 20.03 0 005.993 2.98.078.078 0 00.084-.026c.462-.62.874-1.275 1.226-1.963.021-.04.001-.088-.041-.104a13.201 13.201 0 01-1.872-.878.075.075 0 01-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 01.078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 01.079.009c.12.098.245.195.372.288a.075.075 0 01-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 00-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 00.084.028 19.963 19.963 0 006.002-2.981.076.076 0 00.032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 00-.031-.028z"/></svg>
+        Join Discord
+      </a>
+    </div>
+    <div class="hero-stats reveal reveal-delay-4">
+      <div class="stat-card">
+        <div class="stat-value">2.46k</div>
+        <div class="stat-label">Products Sold</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">287</div>
+        <div class="stat-label">Total Customers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value"><span class="icon">&#9733;</span> 4.97</div>
+        <div class="stat-label">Average Rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF BAR -->
+<div class="proof-bar">
+  <div class="proof-bar-inner">
+    <div class="proof-item reveal">
+      <div class="proof-value" data-count="2460">0</div>
+      <div class="proof-label">Orders Completed</div>
+    </div>
+    <div class="proof-item reveal reveal-delay-1">
+      <div class="proof-value" data-count="287">0</div>
+      <div class="proof-label">Happy Customers</div>
+    </div>
+    <div class="proof-item reveal reveal-delay-2">
+      <div class="proof-value">4.97 &#9733;</div>
+      <div class="proof-label">Seller Rating</div>
+    </div>
+    <div class="proof-item reveal reveal-delay-3">
+      <div class="proof-value">&lt;30s</div>
+      <div class="proof-label">Avg. Delivery Time</div>
+    </div>
+  </div>
+</div>
+
+<!-- CATEGORIES / PRODUCTS -->
+<section class="categories-section" id="products">
+  <div class="section-header">
+    <div class="section-tag reveal">&#128722; Shop</div>
+    <h2 class="section-title reveal reveal-delay-1">Browse Categories</h2>
+    <p class="section-desc reveal reveal-delay-2">Explore our curated selection of digital services, all backed by instant delivery and quality guarantees.</p>
+  </div>
+  <div class="categories-grid">
+    <div class="category-card reveal" onclick="openProduct('Streaming Services','$0.99 – $2.99','4 products','&#127916;','Premium streaming service accounts.',0.99)">
+      <div class="category-img" style="background:linear-gradient(135deg,#1a1033,#0d1b2a)">
+        <div class="category-img-inner">&#127916;</div>
+        <div class="category-overlay"></div>
+      </div>
+      <div class="category-info">
+        <div class="category-title">Streaming Services</div>
+        <div class="category-meta">
+          <span class="category-count">4 products</span>
+          <span class="category-price">$0.99 – $2.99</span>
+        </div>
+        <div class="category-badge">Instant Delivery</div>
+      </div>
+    </div>
+    <div class="category-card reveal reveal-delay-1" onclick="openProduct('Discord Decor','$1.80','35 in stock','&#128142;','Custom Discord decoration items.',1.80)">
+      <div class="category-img" style="background:linear-gradient(135deg,#1b0a2e,#162447)">
+        <div class="category-img-inner">&#128142;</div>
+        <div class="category-overlay"></div>
+      </div>
+      <div class="category-info">
+        <div class="category-title">Discord Decor</div>
+        <div class="category-meta">
+          <span class="category-count">35 in stock</span>
+          <span class="category-price">$1.80</span>
+        </div>
+        <div class="category-badge">Instant Delivery</div>
+      </div>
+    </div>
+    <div class="category-card reveal reveal-delay-2" onclick="openProduct('Social Media','$0.02 – $14.00','4 products','&#128241;','Social media growth and management services.',0.02)">
+      <div class="category-img" style="background:linear-gradient(135deg,#0f2027,#203a43)">
+        <div class="category-img-inner">&#128241;</div>
+        <div class="category-overlay"></div>
+      </div>
+      <div class="category-info">
+        <div class="category-title">Social Media</div>
+        <div class="category-meta">
+          <span class="category-count">4 products</span>
+          <span class="category-price">$0.02 – $14.00</span>
+        </div>
+        <div class="category-badge">Instant Delivery</div>
+      </div>
+    </div>
+    <div class="category-card reveal reveal-delay-1" onclick="openProduct('Prize Picks + Balance','$1.50 – $5.00','6 products','&#127922;','Prize Picks accounts and balance refills.',1.50)">
+      <div class="category-img" style="background:linear-gradient(135deg,#1a0a2e,#2d1b69)">
+        <div class="category-img-inner">&#127922;</div>
+        <div class="category-overlay"></div>
+      </div>
+      <div class="category-info">
+        <div class="category-title">Prize Picks + Balance</div>
+        <div class="category-meta">
+          <span class="category-count">6 products</span>
+          <span class="category-price">$1.50 – $5.00</span>
+        </div>
+        <div class="category-badge">Instant Delivery</div>
+      </div>
+    </div>
+    <div class="category-card reveal reveal-delay-2" onclick="openProduct('Discord Services','$0.50 – $8.00','12 products','&#128172;','General Discord server services.',0.50)">
+      <div class="category-img" style="background:linear-gradient(135deg,#0f1923,#1a2a3a)">
+        <div class="category-img-inner">&#128172;</div>
+        <div class="category-overlay"></div>
+      </div>
+      <div class="category-info">
+        <div class="category-title">Discord Services</div>
+        <div class="category-meta">
+          <span class="category-count">12 products</span>
+          <span class="category-price">$0.50 – $8.00</span>
+        </div>
+        <div class="category-badge">Instant Delivery</div>
+      </div>
+    </div>
+    <div class="category-card reveal reveal-delay-3" onclick="openProduct('Roblox','$0.99 – $12.00','8 products','&#127918;','Roblox items and services.',0.99)">
+      <div class="category-img" style="background:linear-gradient(135deg,#0a1628,#1a2940)">
+        <div class="category-img-inner">&#127918;</div>
+        <div class="category-overlay"></div>
+      </div>
+      <div class="category-info">
+        <div class="category-title">Roblox</div>
+        <div class="category-meta">
+          <span class="category-count">8 products</span>
+          <span class="category-price">$0.99 – $12.00</span>
+        </div>
+        <div class="category-badge">Instant Delivery</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCT -->
+<section id="featured">
+  <div class="section-header">
+    <div class="section-tag reveal">&#11088; Featured</div>
+    <h2 class="section-title reveal reveal-delay-1">Premium Discord Nitro</h2>
+    <p class="section-desc reveal reveal-delay-2">Our most popular product — delivered instantly to your account.</p>
+  </div>
+  <div class="product-showcase">
+    <div class="product-media reveal">
+      <div class="product-media-bg"></div>
+      <div class="product-media-icon">&#128142;</div>
+    </div>
+    <div class="product-details reveal reveal-delay-1">
+      <div class="live-indicator">
+        <span class="live-dot"></span>
+        <span>12 people viewing this right now</span>
+      </div>
+      <h2>Discord Nitro — 1 Month</h2>
+      <div class="product-price-row">
+        <span class="product-price">$1.80</span>
+        <span class="product-stock">In Stock</span>
+      </div>
+      <p class="product-desc">
+        Get full Discord Nitro with all premium features including custom emojis, HD streaming, server boosts, and more. Delivered instantly after purchase.
+      </p>
+      <div class="product-qty">
+        <label>Quantity</label>
+        <div class="qty-controls">
+          <button class="qty-btn" onclick="changeQty(-1)">−</button>
+          <div class="qty-value" id="qtyVal">1</div>
+          <button class="qty-btn" onclick="changeQty(1)">+</button>
+        </div>
+      </div>
+      <div class="product-actions">
+        <button class="btn btn-primary" style="flex:1.5">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+          Add to Cart
+        </button>
+        <button class="btn btn-secondary">Buy Now</button>
+      </div>
+      <div class="product-features">
+        <div class="product-feature">
+          <div class="product-feature-icon">&#9889;</div>
+          <span>Instant Delivery</span>
+        </div>
+        <div class="product-feature">
+          <div class="product-feature-icon">&#128274;</div>
+          <span>Secure Payment</span>
+        </div>
+        <div class="product-feature">
+          <div class="product-feature-icon">&#9989;</div>
+          <span>Verified Seller</span>
+        </div>
+        <div class="product-feature">
+          <div class="product-feature-icon">&#128172;</div>
+          <span>24/7 Support</span>
+        </div>
+      </div>
+      <div class="payment-methods" style="margin-top:20px;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="font-size:0.8rem;color:var(--text-muted);font-weight:500">We accept</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border);font-size:0.82rem;font-weight:600;color:var(--text-secondary)">
+          <span style="color:#3d95ce">&#9679;</span> Venmo
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border);font-size:0.82rem;font-weight:600;color:var(--text-secondary)">
+          <span style="color:#0070ba">&#9679;</span> PayPal
+        </span>
+        <span style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;background:var(--bg-card);border:1px solid var(--border);font-size:0.82rem;font-weight:600;color:var(--text-secondary)">
+          <span style="color:#6d2fef">&#9679;</span> Zelle
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US / TRUST -->
+<section class="categories-section" id="trust">
+  <div class="section-header">
+    <div class="section-tag reveal">&#128737;&#65039; Why Us</div>
+    <h2 class="section-title reveal reveal-delay-1">Built on Trust</h2>
+    <p class="section-desc reveal reveal-delay-2">Here's why thousands of customers choose us over competitors.</p>
+  </div>
+  <div class="trust-grid">
+    <div class="trust-card reveal">
+      <div class="trust-icon">&#9889;</div>
+      <h3>Automatic Delivery</h3>
+      <p>Your products are delivered instantly after purchase. No waiting, no tickets — just seamless automation.</p>
+    </div>
+    <div class="trust-card reveal reveal-delay-1">
+      <div class="trust-icon">&#128176;</div>
+      <h3>Unbeatable Prices</h3>
+      <p>We offer the most competitive rates in the market without compromising on quality or reliability.</p>
+    </div>
+    <div class="trust-card reveal reveal-delay-2">
+      <div class="trust-icon">&#128274;</div>
+      <h3>Secure Payments</h3>
+      <p>We accept Venmo, PayPal, and Zelle — trusted platforms you already know and use. Fast, safe, and hassle-free.</p>
+    </div>
+    <div class="trust-card reveal reveal-delay-1">
+      <div class="trust-icon">&#9989;</div>
+      <h3>Verified & Trusted</h3>
+      <p>Over 2,400 successful orders and a 4.97 rating. Our track record speaks for itself.</p>
+    </div>
+    <div class="trust-card reveal reveal-delay-2">
+      <div class="trust-icon">&#128172;</div>
+      <h3>24/7 Support</h3>
+      <p>Our team is always available through Discord and email to help with any questions or issues.</p>
+    </div>
+    <div class="trust-card reveal reveal-delay-3">
+      <div class="trust-icon">&#128640;</div>
+      <h3>Legal Methods</h3>
+      <p>All services are provided through legitimate and safe methods. Your accounts stay secure with us.</p>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section" id="reviews">
+  <div class="section-header">
+    <div class="section-tag reveal">&#128172; Reviews</div>
+    <h2 class="section-title reveal reveal-delay-1">What Customers Say</h2>
+    <p class="section-desc reveal reveal-delay-2">Real feedback from real customers who trust our marketplace.</p>
+  </div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal">
+      <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="testimonial-text">"Fastest delivery I've ever seen. Literally got my product in under 10 seconds. Will definitely be coming back."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">J</div>
+        <div>
+          <div class="testimonial-name">Jake M.</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="testimonial-text">"Great prices compared to everywhere else I looked. Support was super helpful when I had a question too."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">S</div>
+        <div>
+          <div class="testimonial-name">Sarah K.</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p class="testimonial-text">"This is now my go-to shop. Clean site, easy checkout, and everything just works. 10/10 recommend."</p>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar">R</div>
+        <div>
+          <div class="testimonial-name">Ryan T.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <div class="section-tag reveal">&#128640; Get Started</div>
+  <h2 class="reveal reveal-delay-1">Ready to Elevate<br>Your Experience?</h2>
+  <p class="reveal reveal-delay-2">Join hundreds of satisfied customers and discover premium digital services at unbeatable prices.</p>
+  <a href="#products" class="btn btn-primary reveal reveal-delay-3">
+    <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>
+    Browse Products
+  </a>
+</section>
+
+<!-- FOOTER -->
+<!-- PRODUCT MODAL -->
+<div class="modal-overlay" id="productModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('productModal')">&times;</button>
+    <div class="modal-body">
+      <div class="modal-media">
+        <div class="modal-media-icon" id="modalIcon">&#128142;</div>
+      </div>
+      <div class="modal-info">
+        <div class="modal-live"><span class="live-dot"></span><span id="modalViewers">12 people viewing</span></div>
+        <h2 id="modalTitle">Product Name</h2>
+        <div class="modal-price-row">
+          <span class="modal-price" id="modalPrice">$1.80</span>
+          <span class="modal-stock" id="modalStock">In Stock</span>
+        </div>
+        <p class="modal-desc" id="modalDesc">Product description goes here.</p>
+        <div class="modal-qty">
+          <label>Qty</label>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeModalQty(-1)">−</button>
+            <div class="qty-value" id="modalQtyVal">1</div>
+            <button class="qty-btn" onclick="changeModalQty(1)">+</button>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;margin-bottom:18px">
+          <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="openCheckout()">Buy Now</button>
+          <button class="btn btn-secondary" style="flex:1;justify-content:center" onclick="addToCart()">Add to Cart</button>
+        </div>
+        <div class="modal-features">
+          <div class="modal-feature"><span class="modal-feature-icon">&#9889;</span>Instant Delivery</div>
+          <div class="modal-feature"><span class="modal-feature-icon">&#128274;</span>Secure Payment</div>
+          <div class="modal-feature"><span class="modal-feature-icon">&#9989;</span>Verified Seller</div>
+          <div class="modal-feature"><span class="modal-feature-icon">&#128172;</span>24/7 Support</div>
+        </div>
+        <div class="modal-payments">
+          <span class="modal-payments-label">Accepted Payments</span>
+          <span class="pay-badge"><span class="pay-dot" style="background:#3d95ce"></span>Venmo</span>
+          <span class="pay-badge"><span class="pay-dot" style="background:#0070ba"></span>PayPal</span>
+          <span class="pay-badge"><span class="pay-dot" style="background:#6d2fef"></span>Zelle</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+  <div class="modal" style="max-width:560px">
+    <button class="modal-close" onclick="closeModal('checkoutModal')">&times;</button>
+    <div class="checkout-steps">
+
+      <!-- STEP 1: Review -->
+      <div class="checkout-step active" id="checkoutStep1">
+        <div class="checkout-progress">
+          <div class="progress-step active"><div class="progress-dot">1</div>Review</div>
+          <div class="progress-line"></div>
+          <div class="progress-step"><div class="progress-dot">2</div>Pay</div>
+          <div class="progress-line"></div>
+          <div class="progress-step"><div class="progress-dot">3</div>Done</div>
+        </div>
+        <h3 class="checkout-header">Review Your Order</h3>
+        <p class="checkout-sub">Make sure everything looks right before proceeding.</p>
+        <div class="checkout-summary">
+          <div class="checkout-summary-row">
+            <span id="checkoutProduct">Product</span>
+            <span id="checkoutQty">x1</span>
+          </div>
+          <div class="checkout-summary-row">
+            <span>Unit Price</span>
+            <span id="checkoutUnitPrice">$1.80</span>
+          </div>
+          <div class="checkout-summary-row total">
+            <span>Total</span>
+            <span id="checkoutTotal">$1.80</span>
+          </div>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="goToStep(2)">Continue to Payment</button>
+      </div>
+
+      <!-- STEP 2: Payment -->
+      <div class="checkout-step" id="checkoutStep2">
+        <div class="checkout-progress">
+          <div class="progress-step done"><div class="progress-dot">&#10003;</div>Review</div>
+          <div class="progress-line done"></div>
+          <div class="progress-step active"><div class="progress-dot">2</div>Pay</div>
+          <div class="progress-line"></div>
+          <div class="progress-step"><div class="progress-dot">3</div>Done</div>
+        </div>
+        <h3 class="checkout-header">Choose Payment Method</h3>
+        <p class="checkout-sub">Select how you'd like to pay. You'll send payment after placing the order.</p>
+        <div class="payment-options">
+          <div class="payment-option" onclick="selectPayment(this,'venmo')">
+            <div class="payment-radio"><div class="payment-radio-inner"></div></div>
+            <div class="payment-icon" style="background:rgba(61,149,206,0.12)">
+              <span style="color:#3d95ce;font-weight:800;font-size:0.9rem">V</span>
+            </div>
+            <div>
+              <div class="payment-name">Venmo</div>
+              <div class="payment-handle">@SnowsShop</div>
+            </div>
+          </div>
+          <div class="payment-option" onclick="selectPayment(this,'paypal')">
+            <div class="payment-radio"><div class="payment-radio-inner"></div></div>
+            <div class="payment-icon" style="background:rgba(0,112,186,0.12)">
+              <span style="color:#0070ba;font-weight:800;font-size:0.9rem">P</span>
+            </div>
+            <div>
+              <div class="payment-name">PayPal</div>
+              <div class="payment-handle">@SnowsShop</div>
+            </div>
+          </div>
+          <div class="payment-option" onclick="selectPayment(this,'zelle')">
+            <div class="payment-radio"><div class="payment-radio-inner"></div></div>
+            <div class="payment-icon" style="background:rgba(109,47,239,0.12)">
+              <span style="color:#6d2fef;font-weight:800;font-size:0.9rem">Z</span>
+            </div>
+            <div>
+              <div class="payment-name">Zelle</div>
+              <div class="payment-handle">snow@example.com</div>
+            </div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-secondary" style="flex:1;justify-content:center" onclick="goToStep(1)">Back</button>
+          <button class="btn btn-primary" style="flex:1.5;justify-content:center" id="placeOrderBtn" onclick="placeOrder()" disabled style="opacity:0.5">Place Order</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: Confirmation -->
+      <div class="checkout-step" id="checkoutStep3">
+        <div class="checkout-progress">
+          <div class="progress-step done"><div class="progress-dot">&#10003;</div>Review</div>
+          <div class="progress-line done"></div>
+          <div class="progress-step done"><div class="progress-dot">&#10003;</div>Pay</div>
+          <div class="progress-line done"></div>
+          <div class="progress-step active"><div class="progress-dot">3</div>Done</div>
+        </div>
+        <div class="order-success">
+          <div class="order-checkmark">&#10003;</div>
+          <h3 class="checkout-header">Order Placed!</h3>
+          <p class="checkout-sub" style="margin-bottom:0">Your order has been created. Complete the steps below to receive your product.</p>
+        </div>
+        <div class="order-id-box">
+          <div>
+            <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:2px">Order ID</div>
+            <div class="order-id-value" id="orderIdDisplay">SNOW-XXXX</div>
+          </div>
+          <button class="copy-btn" onclick="copyOrderId()">Copy</button>
+        </div>
+        <div class="order-instructions">
+          <h4>How to Complete Your Order</h4>
+          <div class="order-step">
+            <div class="order-step-num">1</div>
+            <div>Send <strong id="confirmTotal">$1.80</strong> to <strong id="confirmHandle">@SnowsShop</strong> via <strong id="confirmMethod">Venmo</strong></div>
+          </div>
+          <div class="order-step">
+            <div class="order-step-num">2</div>
+            <div>Join our Discord server and open a ticket in <strong>#create-ticket</strong></div>
+          </div>
+          <div class="order-step">
+            <div class="order-step-num">3</div>
+            <div>Send your <strong>Order ID</strong> and a <strong>screenshot of payment</strong> in the ticket</div>
+          </div>
+          <div class="order-step">
+            <div class="order-step-num">4</div>
+            <div>We'll verify and deliver your product — usually within minutes!</div>
+          </div>
+        </div>
+        <a href="https://discord.gg/FMxy3VBE" target="_blank" class="discord-btn" style="width:100%;justify-content:center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.492c-1.53-.69-3.17-1.2-4.885-1.49a.075.075 0 00-.079.036c-.21.369-.444.85-.608 1.23a18.566 18.566 0 00-5.487 0 12.36 12.36 0 00-.617-1.23A.077.077 0 008.562 3c-1.714.29-3.354.8-4.885 1.491a.07.07 0 00-.032.027C.533 9.093-.32 13.555.099 17.961a.08.08 0 00.031.055 20.03 20.03 0 005.993 2.98.078.078 0 00.084-.026c.462-.62.874-1.275 1.226-1.963.021-.04.001-.088-.041-.104a13.201 13.201 0 01-1.872-.878.075.075 0 01-.008-.125c.126-.093.252-.19.372-.287a.075.075 0 01.078-.01c3.927 1.764 8.18 1.764 12.061 0a.075.075 0 01.079.009c.12.098.245.195.372.288a.075.075 0 01-.006.125c-.598.344-1.22.635-1.873.877a.075.075 0 00-.041.105c.36.687.772 1.341 1.225 1.962a.077.077 0 00.084.028 19.963 19.963 0 006.002-2.981.076.076 0 00.032-.054c.5-5.094-.838-9.52-3.549-13.442a.06.06 0 00-.031-.028z"/></svg>
+          Open Discord & Create Ticket
+        </a>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Snow's <span>Shop</span></div>
+      <p class="footer-desc">Your trusted destination for premium digital services. Fast, reliable, and always affordable.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <a href="#home">Home</a>
+      <a href="#products">Products</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#">Status</a>
+      <a href="#">Blog</a>
+    </div>
+    <div class="footer-col">
+      <h4>Categories</h4>
+      <a href="#">Streaming</a>
+      <a href="#">Discord</a>
+      <a href="#">Social Media</a>
+      <a href="#">Roblox</a>
+    </div>
+    <div class="footer-col">
+      <h4>Support</h4>
+      <a href="https://discord.gg/FMxy3VBE" target="_blank">Discord Server</a>
+      <a href="#">Contact Us</a>
+      <a href="#">FAQ</a>
+      <a href="#">Report Issue</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>&copy; 2026 Snow's Shop. All rights reserved.</span>
+    <div class="footer-legal">
+      <a href="#">Terms of Service</a>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Refund Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Loading screen
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('hidden');
+  }, 1400);
+});
+
+// Particles
+const particlesEl = document.getElementById('particles');
+for(let i = 0; i < 30; i++){
+  const p = document.createElement('div');
+  p.className = 'particle';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.animationDuration = (4 + Math.random() * 6) + 's';
+  p.style.animationDelay = Math.random() * 5 + 's';
+  p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
+  particlesEl.appendChild(p);
+}
+
+// Sticky navbar
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+revealEls.forEach(el => revealObserver.observe(el));
+
+// Counter animation
+const counterEls = document.querySelectorAll('[data-count]');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      const target = parseInt(e.target.dataset.count);
+      let current = 0;
+      const step = Math.max(1, Math.floor(target / 60));
+      const timer = setInterval(() => {
+        current += step;
+        if(current >= target) {
+          current = target;
+          clearInterval(timer);
+        }
+        e.target.textContent = current >= 1000 ? (current / 1000).toFixed(current % 1000 === 0 ? 0 : 1) + 'k+' : current + '+';
+      }, 20);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+counterEls.forEach(el => counterObserver.observe(el));
+
+// Qty controls
+function changeQty(delta){
+  const el = document.getElementById('qtyVal');
+  let val = parseInt(el.textContent) + delta;
+  if(val < 1) val = 1;
+  if(val > 99) val = 99;
+  el.textContent = val;
+}
+
+// ====== PRODUCT MODAL SYSTEM ======
+let currentProduct = {};
+let selectedPayment = null;
+
+// Pull payment handles from shared settings (set in admin panel)
+function getSettings(){
+  try {
+    return JSON.parse(localStorage.getItem('snow_settings') || '{}');
+  } catch{ return {}; }
+}
+const savedSettings = getSettings();
+const paymentHandles = {
+  venmo: savedSettings.venmo || '@SnowsShop',
+  paypal: savedSettings.paypal || '@SnowsShop',
+  zelle: savedSettings.zelle || 'snow@example.com'
+};
+const paymentNames = { venmo:'Venmo', paypal:'PayPal', zelle:'Zelle' };
+
+function changeQty(delta){
+  const el = document.getElementById('qtyVal');
+  let val = parseInt(el.textContent) + delta;
+  if(val < 1) val = 1;
+  if(val > 99) val = 99;
+  el.textContent = val;
+}
+
+function changeModalQty(delta){
+  const el = document.getElementById('modalQtyVal');
+  let val = parseInt(el.textContent) + delta;
+  if(val < 1) val = 1;
+  if(val > 99) val = 99;
+  el.textContent = val;
+}
+
+function openProduct(name, price, stock, icon, desc, unitPrice){
+  currentProduct = { name, price, stock, icon, desc, unitPrice };
+  document.getElementById('modalTitle').textContent = name;
+  document.getElementById('modalPrice').textContent = price;
+  document.getElementById('modalStock').textContent = stock;
+  document.getElementById('modalIcon').innerHTML = icon;
+  document.getElementById('modalDesc').textContent = desc;
+  document.getElementById('modalQtyVal').textContent = '1';
+  document.getElementById('modalViewers').textContent = (Math.floor(Math.random()*18)+3) + ' people viewing';
+  document.getElementById('productModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+  if(id === 'checkoutModal'){
+    selectedPayment = null;
+    goToStep(1);
+    document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+    const btn = document.getElementById('placeOrderBtn');
+    btn.disabled = true; btn.style.opacity = '0.5';
+  }
+}
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) closeModal(overlay.id);
+  });
+});
+
+function changeModalQty(delta){
+  const el = document.getElementById('modalQtyVal');
+  let val = parseInt(el.textContent) + delta;
+  if(val < 1) val = 1;
+  if(val > 99) val = 99;
+  el.textContent = val;
+}
+
+// ====== CHECKOUT FLOW ======
+function openCheckout(){
+  const qty = parseInt(document.getElementById('modalQtyVal').textContent);
+  const total = (currentProduct.unitPrice * qty).toFixed(2);
+  document.getElementById('checkoutProduct').textContent = currentProduct.name;
+  document.getElementById('checkoutQty').textContent = 'x' + qty;
+  document.getElementById('checkoutUnitPrice').textContent = '$' + currentProduct.unitPrice.toFixed(2);
+  document.getElementById('checkoutTotal').textContent = '$' + total;
+  currentProduct.qty = qty;
+  currentProduct.total = total;
+  closeModal('productModal');
+  setTimeout(() => {
+    document.getElementById('checkoutModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }, 200);
+}
+
+function goToStep(step){
+  document.querySelectorAll('.checkout-step').forEach(s => s.classList.remove('active'));
+  document.getElementById('checkoutStep' + step).classList.add('active');
+}
+
+function selectPayment(el, method){
+  selectedPayment = method;
+  document.querySelectorAll('.payment-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  const btn = document.getElementById('placeOrderBtn');
+  btn.disabled = false;
+  btn.style.opacity = '1';
+}
+
+function generateOrderId(){
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let id = 'SNOW-';
+  for(let i = 0; i < 6; i++) id += chars.charAt(Math.floor(Math.random() * chars.length));
+  return id;
+}
+
+function placeOrder(){
+  if(!selectedPayment) return;
+  
+  const orderId = generateOrderId();
+  currentProduct.orderId = orderId;
+  
+  // Save order to shared localStorage so admin panel can see it
+  const newOrder = {
+    id: orderId,
+    product: currentProduct.name,
+    qty: currentProduct.qty,
+    total: parseFloat(currentProduct.total),
+    method: paymentNames[selectedPayment],
+    status: 'pending',
+    date: new Date().toISOString().split('T')[0]
+  };
+  
+  try {
+    const existing = JSON.parse(localStorage.getItem('snow_orders') || '[]');
+    existing.push(newOrder);
+    localStorage.setItem('snow_orders', JSON.stringify(existing));
+  } catch(e) {
+    console.error('Could not save order:', e);
+  }
+
+  // Update stock in shared localStorage
+  try {
+    const products = JSON.parse(localStorage.getItem('snow_products') || '[]');
+    const match = products.find(p => p.name === currentProduct.name);
+    if(match && match.stock > 0){
+      match.stock = Math.max(0, match.stock - currentProduct.qty);
+      localStorage.setItem('snow_products', JSON.stringify(products));
+    }
+  } catch(e) {}
+  
+  document.getElementById('orderIdDisplay').textContent = orderId;
+  document.getElementById('confirmTotal').textContent = '$' + currentProduct.total;
+  document.getElementById('confirmMethod').textContent = paymentNames[selectedPayment];
+  document.getElementById('confirmHandle').textContent = paymentHandles[selectedPayment];
+  
+  goToStep(3);
+}
+
+function copyOrderId(){
+  const id = document.getElementById('orderIdDisplay').textContent;
+  navigator.clipboard.writeText(id).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = 'Copied!';
+    setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+  });
+}
+
+let cart = [];
+
+function addToCart(){
+  const qty = parseInt(document.getElementById('modalQtyVal').textContent);
+  if(isNaN(qty) || qty < 1) return;
+  
+  const item = {
+    id: Date.now(),
+    name: currentProduct.name,
+    price: currentProduct.unitPrice,
+    qty: qty,
+    icon: currentProduct.icon,
+    total: (currentProduct.unitPrice * qty).toFixed(2)
+  };
+  
+  cart.push(item);
+  updateCartUI();
+  
+  // Animate badge
+  const badge = document.getElementById('cartCount');
+  badge.style.transform = 'scale(1.4)';
+  badge.style.background = 'var(--green)';
+  setTimeout(() => {
+    badge.style.transform = 'scale(1)';
+    badge.style.background = 'var(--accent)';
+  }, 400);
+  
+  closeModal('productModal');
+  openCart();
+}
+
+function updateCartUI(){
+  const list = document.getElementById('cartItemsList');
+  const badge = document.getElementById('cartCount');
+  badge.textContent = cart.length;
+  
+  if(cart.length === 0){
+    list.innerHTML = `
+      <div class="cart-empty">
+        <div class="cart-empty-icon">&#128722;</div>
+        <p>Your cart is empty</p>
+      </div>
+    `;
+    document.getElementById('cartTotalDisplay').textContent = '$0.00';
+    return;
+  }
+  
+  let subtotal = 0;
+  list.innerHTML = cart.map((item, index) => {
+    subtotal += parseFloat(item.total);
+    return `
+      <div class="cart-item">
+        <div class="cart-item-icon">${item.icon}</div>
+        <div class="cart-item-info">
+          <div class="cart-item-name">${item.name}</div>
+          <div class="cart-item-details">Qty: ${item.qty} &bull; $${item.price.toFixed(2)} each</div>
+          <div class="cart-item-price">$${item.total}</div>
+        </div>
+        <div class="cart-item-remove" onclick="removeFromCart(${index})" title="Remove">✕</div>
+      </div>
+    `;
+  }).join('');
+  
+  document.getElementById('cartTotalDisplay').textContent = '$' + subtotal.toFixed(2);
+}
+
+function openCart(){
+  document.getElementById('cartModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function removeFromCart(index){
+  cart.splice(index, 1);
+  updateCartUI();
+}
+
+function checkoutFromCart(){
+  if(cart.length === 0) return;
+  
+  const total = cart.reduce((sum, item) => sum + parseFloat(item.total), 0).toFixed(2);
+  const names = cart.map(item => item.name + ' (x' + item.qty + ')').join(', ');
+  
+  currentProduct = {
+    name: names.length > 50 ? 'Multiple Items' : names,
+    total: total,
+    unitPrice: 0,
+    qty: 1,
+    fullNames: names
+  };
+  
+  document.getElementById('checkoutProduct').textContent = currentProduct.name;
+  document.getElementById('checkoutQty').textContent = '--';
+  document.getElementById('checkoutUnitPrice').textContent = '--';
+  document.getElementById('checkoutTotal').textContent = '$' + total;
+  
+  closeModal('cartModal');
+  setTimeout(() => {
+    document.getElementById('checkoutModal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }, 300);
+}
+</script>
+</body>
+</html>
