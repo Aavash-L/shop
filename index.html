@@ -176,7 +176,7 @@ body{
 }
 .hero-desc{
   font-size:1.1rem;line-height:1.7;color:var(--text-secondary);
-  margin-bottom:36px;max-width:520px;
+  margin:0 auto 36px;max-width:520px;
 }
 .hero-ctas{display:flex;gap:14px;margin-bottom:48px;flex-wrap:wrap;justify-content:center}
 .btn{
@@ -582,6 +582,39 @@ section{padding:100px 60px}
 }
 .modal-stock::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green-glow)}
 .modal-desc{font-size:0.9rem;color:var(--text-secondary);line-height:1.7;margin-bottom:20px}
+#modalVariants{
+  margin-bottom:18px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+}
+.variant-group{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+.variant-group label{
+  font-size:0.75rem;
+  color:var(--text-muted);
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+.variant-group select{
+  background:var(--bg-card);
+  border:1px solid var(--border);
+  border-radius:var(--radius-xs);
+  padding:10px;
+  color:var(--text-primary);
+  font-size:0.9rem;
+  outline:none;
+  cursor:pointer;
+  transition:var(--transition);
+}
+.variant-group select:focus{
+  border-color:var(--accent-primary);
+  background:var(--bg-card-hover);
+}
 .modal-qty{display:flex;align-items:center;gap:12px;margin-bottom:18px}
 .modal-qty label{font-size:0.84rem;color:var(--text-secondary);font-weight:500}
 .modal-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px}
@@ -916,91 +949,8 @@ section{padding:100px 60px}
     <h2 class="section-title reveal reveal-delay-1">Browse Categories</h2>
     <p class="section-desc reveal reveal-delay-2">Explore our curated selection of digital services, all backed by instant delivery and quality guarantees.</p>
   </div>
-  <div class="categories-grid">
-    <div class="category-card reveal" onclick="openProduct('Streaming Services','$0.99 – $2.99','4 products','&#127916;','Premium streaming service accounts.',0.99)">
-      <div class="category-img" style="background:linear-gradient(135deg,#1a1033,#0d1b2a)">
-        <div class="category-img-inner">&#127916;</div>
-        <div class="category-overlay"></div>
-      </div>
-      <div class="category-info">
-        <div class="category-title">Streaming Services</div>
-        <div class="category-meta">
-          <span class="category-count">4 products</span>
-          <span class="category-price">$0.99 – $2.99</span>
-        </div>
-        <div class="category-badge">Instant Delivery</div>
-      </div>
-    </div>
-    <div class="category-card reveal reveal-delay-1" onclick="openProduct('Discord Decor','$1.80','35 in stock','&#128142;','Custom Discord decoration items.',1.80)">
-      <div class="category-img" style="background:linear-gradient(135deg,#1b0a2e,#162447)">
-        <div class="category-img-inner">&#128142;</div>
-        <div class="category-overlay"></div>
-      </div>
-      <div class="category-info">
-        <div class="category-title">Discord Decor</div>
-        <div class="category-meta">
-          <span class="category-count">35 in stock</span>
-          <span class="category-price">$1.80</span>
-        </div>
-        <div class="category-badge">Instant Delivery</div>
-      </div>
-    </div>
-    <div class="category-card reveal reveal-delay-2" onclick="openProduct('Social Media','$0.02 – $14.00','4 products','&#128241;','Social media growth and management services.',0.02)">
-      <div class="category-img" style="background:linear-gradient(135deg,#0f2027,#203a43)">
-        <div class="category-img-inner">&#128241;</div>
-        <div class="category-overlay"></div>
-      </div>
-      <div class="category-info">
-        <div class="category-title">Social Media</div>
-        <div class="category-meta">
-          <span class="category-count">4 products</span>
-          <span class="category-price">$0.02 – $14.00</span>
-        </div>
-        <div class="category-badge">Instant Delivery</div>
-      </div>
-    </div>
-    <div class="category-card reveal reveal-delay-1" onclick="openProduct('Prize Picks + Balance','$1.50 – $5.00','6 products','&#127922;','Prize Picks accounts and balance refills.',1.50)">
-      <div class="category-img" style="background:linear-gradient(135deg,#1a0a2e,#2d1b69)">
-        <div class="category-img-inner">&#127922;</div>
-        <div class="category-overlay"></div>
-      </div>
-      <div class="category-info">
-        <div class="category-title">Prize Picks + Balance</div>
-        <div class="category-meta">
-          <span class="category-count">6 products</span>
-          <span class="category-price">$1.50 – $5.00</span>
-        </div>
-        <div class="category-badge">Instant Delivery</div>
-      </div>
-    </div>
-    <div class="category-card reveal reveal-delay-2" onclick="openProduct('Discord Services','$0.50 – $8.00','12 products','&#128172;','General Discord server services.',0.50)">
-      <div class="category-img" style="background:linear-gradient(135deg,#0f1923,#1a2a3a)">
-        <div class="category-img-inner">&#128172;</div>
-        <div class="category-overlay"></div>
-      </div>
-      <div class="category-info">
-        <div class="category-title">Discord Services</div>
-        <div class="category-meta">
-          <span class="category-count">12 products</span>
-          <span class="category-price">$0.50 – $8.00</span>
-        </div>
-        <div class="category-badge">Instant Delivery</div>
-      </div>
-    </div>
-    <div class="category-card reveal reveal-delay-3" onclick="openProduct('Roblox','$0.99 – $12.00','8 products','&#127918;','Roblox items and services.',0.99)">
-      <div class="category-img" style="background:linear-gradient(135deg,#0a1628,#1a2940)">
-        <div class="category-img-inner">&#127918;</div>
-        <div class="category-overlay"></div>
-      </div>
-      <div class="category-info">
-        <div class="category-title">Roblox</div>
-        <div class="category-meta">
-          <span class="category-count">8 products</span>
-          <span class="category-price">$0.99 – $12.00</span>
-        </div>
-        <div class="category-badge">Instant Delivery</div>
-      </div>
-    </div>
+  <div class="categories-grid" id="productGrid">
+    <!-- Products rendered dynamically -->
   </div>
 </section>
 
@@ -1189,6 +1139,7 @@ section{padding:100px 60px}
           <span class="modal-stock" id="modalStock">In Stock</span>
         </div>
         <p class="modal-desc" id="modalDesc">Product description goes here.</p>
+        <div id="modalVariants"></div>
         <div class="modal-qty">
           <label>Qty</label>
           <div class="qty-controls">
@@ -1395,20 +1346,339 @@ section{padding:100px 60px}
 window.addEventListener('load', () => {
   setTimeout(() => {
     document.getElementById('loader').classList.add('hidden');
+    renderProducts();
   }, 1400);
 });
 
-// Particles
-const particlesEl = document.getElementById('particles');
-for(let i = 0; i < 30; i++){
-  const p = document.createElement('div');
-  p.className = 'particle';
-  p.style.left = Math.random() * 100 + '%';
-  p.style.animationDuration = (4 + Math.random() * 6) + 's';
-  p.style.animationDelay = Math.random() * 5 + 's';
-  p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
-  particlesEl.appendChild(p);
+// ====== PRODUCT DATA & LOADING ======
+const DEFAULT_PRODUCTS = [
+  { 
+    id:1, name:'Discord Members', price:2.50, stock:999, category:'Discord', emoji:'👤', 
+    desc:'High-quality Discord members for your server.', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: 'Offline', value: 'offline' },
+          { label: 'Online', value: 'online' }
+        ]
+      },
+      {
+        name: 'Amount',
+        choices: [
+          { label: '250 Members', value: 250, priceMap: { offline: 2.50, online: 5.00 } },
+          { label: '500 Members', value: 500, priceMap: { offline: 4.50, online: 9.00 } },
+          { label: '750 Members', value: 750, priceMap: { offline: 6.00, online: 12.00 } },
+          { label: '1000 Members', value: 1000, priceMap: { offline: 8.00, online: 15.00 } }
+        ]
+      }
+    ]
+  },
+  {
+    id:2, name:'Discord Server Boosts', price:5.00, stock:999, category:'Discord', emoji:'🚀',
+    desc:'14x Server Boosts for your Discord community.', status:'active',
+    options: [
+      {
+        name: 'Duration',
+        choices: [
+          { label: '1 Month', value: '1m', price: 5.00 },
+          { label: '2 Months', value: '2m', price: 9.00 },
+          { label: '3 Months', value: '3m', price: 12.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:3, name:'Discord Aged Accounts', price:5.00, stock:50, category:'Discord', emoji:'👤',
+    desc:'Vintage Discord accounts for various needs.', status:'active',
+    options: [
+      {
+        name: 'Year',
+        choices: [
+          { label: '2016', value: 2016, price: 10.00 },
+          { label: '2018', value: 2018, price: 7.00 },
+          { label: '2019', value: 2019, price: 5.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:4, name:'Discord Token', price:4.00, stock:100, category:'Discord', emoji:'🔑',
+    desc:'Discord token valid for 3 months.', status:'active'
+  },
+  {
+    id:5, name:'Spotify Premium', price:3.00, stock:100, category:'Streaming', emoji:'🎵',
+    desc:'Premium music streaming experience.', status:'active',
+    options: [
+      {
+        name: 'Plan',
+        choices: [
+          { label: '2 Months', value: '2m', price: 3.00 },
+          { label: '3 Months', value: '3m', price: 4.50 },
+          { label: 'Lifetime', value: 'life', price: 15.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:6, name:'YouTube Premium', price:2.50, stock:100, category:'Streaming', emoji:'📺',
+    desc:'Ad-free YouTube and background play (1 Month).', status:'active'
+  },
+  {
+    id:7, name:'Netflix Lifetime', price:20.00, stock:50, category:'Streaming', emoji:'🎥',
+    desc:'Permanent Netflix access.', status:'active'
+  },
+  {
+    id:8, name:'Disney+ Lifetime', price:15.00, stock:50, category:'Streaming', emoji:'🎬',
+    desc:'Permanent Disney+ access.', status:'active'
+  },
+  {
+    id:10, name:'CapCut Lifetime', price:12.00, stock:50, category:'Software', emoji:'✂️',
+    desc:'Permanent access to CapCut Pro features.', status:'active'
+  },
+  {
+    id:11, name:'NordVPN', price:5.00, stock:100, category:'Software', emoji:'🛡️',
+    desc:'Secure and private internet access.', status:'active',
+    options: [
+      {
+        name: 'Duration',
+        choices: [
+          { label: '6 Months', value: '6m', price: 5.00 },
+          { label: '1 Year', value: '1y', price: 8.00 },
+          { label: '2 Years', value: '2y', price: 12.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:12, name:'Steam Account', price:15.00, stock:20, category:'Gaming', emoji:'🎮',
+    desc:'Full access gaming account.', status:'active'
+  },
+  {
+    id:13, name:'Xbox Game Pass', price:4.00, stock:50, category:'Gaming', emoji:'🎮',
+    desc:'Access to hundreds of games (1 Month).', status:'active'
+  },
+  {
+    id:14, name:'Ulta Accounts', price:10.00, stock:10, category:'Accounts', emoji:'🛍️',
+    desc:'Ulta accounts with various balances.', status:'active',
+    options: [
+      {
+        name: 'Balance',
+        choices: [
+          { label: '$70-$120', value: '70-120', price: 10.00 },
+          { label: '$200-$300', value: '200-300', price: 25.00 },
+          { label: '$300-$400', value: '300-400', price: 35.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:15, name:'Other Accounts', price:5.00, stock:20, category:'Accounts', emoji:'🛍️',
+    desc:'Miscellaneous store accounts with balances.', status:'active',
+    options: [
+      {
+        name: 'Balance Range',
+        choices: [
+          { label: '$30-$50', value: '30-50', price: 5.00 },
+          { label: '$50-$70', value: '50-70', price: 8.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:16, name:'TikTok Services', price:0.50, stock:999, category:'Social Media', emoji:'📈',
+    desc:'Boost your TikTok presence instantly.', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: '1K Views', value: 'views', price: 0.50 },
+          { label: '1K Shares', value: 'shares', price: 1.50 },
+          { label: '1K Likes', value: 'likes', price: 2.00 },
+          { label: '1K Followers [REAL]', value: 'followers', price: 5.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:17, name:'Instagram Services', price:0.80, stock:999, category:'Social Media', emoji:'📸',
+    desc:'Fast growth for your Instagram profile.', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: '1K Views', value: 'views', price: 0.80 },
+          { label: '1K Likes', value: 'likes', price: 1.50 },
+          { label: '1K Followers', value: 'followers', price: 3.00 }
+        ]
+      }
+    ]
+  }
+];
+
+function loadProducts() {
+  try {
+    const version = localStorage.getItem('snow_consolidated');
+    if (version !== 'v1') {
+      localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
+      localStorage.setItem('snow_consolidated', 'v1');
+      return DEFAULT_PRODUCTS;
+    }
+    const saved = localStorage.getItem('snow_products');
+    return saved ? JSON.parse(saved) : DEFAULT_PRODUCTS;
+  } catch { return DEFAULT_PRODUCTS; }
 }
+
+let activeProduct = null;
+
+function renderProducts() {
+  const products = loadProducts();
+  const grid = document.getElementById('productGrid');
+  if(!grid) return;
+  
+  grid.innerHTML = products.filter(p => p.status === 'active').map((p, index) => {
+    // Generate range price for display if options exist
+    let displayPrice = `$${p.price.toFixed(2)}`;
+    if(p.options){
+       const prices = [];
+       p.options.forEach(opt => {
+         opt.choices.forEach(c => {
+           if(c.price) prices.push(c.price);
+           if(c.priceMap) Object.values(c.priceMap).forEach(v => prices.push(v));
+         });
+       });
+       if(prices.length > 0){
+         const min = Math.min(...prices);
+         const max = Math.max(...prices);
+         displayPrice = min === max ? `$${min.toFixed(2)}` : `$${min.toFixed(2)} – $${max.toFixed(2)}`;
+       }
+    }
+
+    return `
+      <div class="category-card reveal" style="transition-delay: ${index * 0.05}s" onclick="openProductById(${p.id})">
+        <div class="category-img">
+          <div class="category-img-inner">${p.emoji}</div>
+          <div class="category-overlay"></div>
+        </div>
+        <div class="category-info">
+          <div class="category-title">${p.name}</div>
+          <div class="category-meta">
+            <span class="category-count">${p.stock} in stock</span>
+            <span class="category-price">${displayPrice}</span>
+          </div>
+          <div class="category-badge">Instant Delivery</div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  // Re-observe new elements
+  const newReveals = grid.querySelectorAll('.reveal');
+  newReveals.forEach(el => revealObserver.observe(el));
+}
+
+function openProductById(id) {
+  const products = loadProducts();
+  const p = products.find(x => String(x.id) === String(id));
+  if(!p) {
+    console.error('Product not found:', id);
+    return;
+  }
+  
+  activeProduct = p;
+  
+  document.getElementById('modalIcon').innerText = p.emoji;
+  document.getElementById('modalTitle').innerText = p.name;
+  document.getElementById('modalPrice').innerText = `$${p.price.toFixed(2)}`;
+  document.getElementById('modalStock').innerText = `${p.stock} in stock`;
+  document.getElementById('modalDesc').innerText = p.desc;
+  document.getElementById('modalQtyVal').innerText = '1';
+
+  // Render Variants
+  const varBox = document.getElementById('modalVariants');
+  varBox.innerHTML = '';
+  if(p.options){
+    p.options.forEach(opt => {
+      const group = document.createElement('div');
+      group.className = 'variant-group';
+      group.innerHTML = `
+        <label>${opt.name}</label>
+        <select onchange="updateModalPrice()">
+          ${opt.choices.map(c => `<option value="${c.value || c.label}" data-price="${c.price||''}" data-pricemap='${JSON.stringify(c.priceMap||{})}'>${c.label}</option>`).join('')}
+        </select>
+      `;
+      varBox.appendChild(group);
+    });
+    updateModalPrice();
+  } else {
+    updateModalPrice();
+  }
+  
+  openModal('productModal');
+}
+
+function updateModalPrice() {
+  if(!activeProduct) return;
+  
+  let currentPrice = activeProduct.price;
+  const selects = document.querySelectorAll('#modalVariants select');
+  
+  // Find mapped price if applicable (like Discord members Type + Amount)
+  // We'll search for the first choice that has a priceMap or price
+  let foundPrice = false;
+  
+  // Multi-dropdown logic (Specific for Discord Members for now or generic map)
+  const selections = Array.from(selects).map(s => s.value);
+  
+  selects.forEach(s => {
+    const opt = s.options[s.selectedIndex];
+    const p = opt.getAttribute('data-price');
+    const pmRaw = opt.getAttribute('data-pricemap');
+    const pm = pmRaw ? JSON.parse(pmRaw) : null;
+    
+    if(p) {
+      currentPrice = parseFloat(p);
+      foundPrice = true;
+    }
+    if(pm) {
+      // Check other selections to find a match in the map
+      selections.forEach(sel => {
+        if(pm[sel]) {
+          currentPrice = pm[sel];
+          foundPrice = true;
+        }
+      });
+    }
+  });
+
+  const qty = parseInt(document.getElementById('modalQtyVal').innerText || '1');
+  document.getElementById('modalPrice').innerText = `$${(currentPrice * qty).toFixed(2)}`;
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+// Keep old openProduct for compatibility but it converts to openProductById if name matches
+function openProduct(name, priceStr, stockStr, emoji, desc, priceNum) {
+  const products = loadProducts();
+  const p = products.find(x => x.name === name);
+  if(p) return openProductById(p.id);
+  
+  // Fallback for non-existent products (manually called via old code)
+  document.getElementById('modalEmoji').innerText = emoji;
+  document.getElementById('modalTitle').innerText = name;
+  document.getElementById('modalPrice').innerText = priceStr;
+  document.getElementById('modalStock').innerText = stockStr;
+  document.getElementById('modalDesc').innerText = desc;
+  document.getElementById('modalQtyVal').innerText = '1';
+  document.getElementById('modalVariants').innerHTML = '';
+  activeProduct = { name, price: priceNum, stock: stockStr, emoji };
+  openModal('productModal');
+}
+
+// Counter animation
 
 // Sticky navbar
 window.addEventListener('scroll', () => {
@@ -1475,34 +1745,16 @@ const paymentHandles = {
 };
 const paymentNames = { venmo:'Venmo', paypal:'PayPal', zelle:'Zelle' };
 
-function changeQty(delta){
-  const el = document.getElementById('qtyVal');
-  let val = parseInt(el.textContent) + delta;
-  if(val < 1) val = 1;
-  if(val > 99) val = 99;
-  el.textContent = val;
-}
-
 function changeModalQty(delta){
   const el = document.getElementById('modalQtyVal');
   let val = parseInt(el.textContent) + delta;
   if(val < 1) val = 1;
   if(val > 99) val = 99;
   el.textContent = val;
+  updateModalPrice();
 }
 
-function openProduct(name, price, stock, icon, desc, unitPrice){
-  currentProduct = { name, price, stock, icon, desc, unitPrice };
-  document.getElementById('modalTitle').textContent = name;
-  document.getElementById('modalPrice').textContent = price;
-  document.getElementById('modalStock').textContent = stock;
-  document.getElementById('modalIcon').innerHTML = icon;
-  document.getElementById('modalDesc').textContent = desc;
-  document.getElementById('modalQtyVal').textContent = '1';
-  document.getElementById('modalViewers').textContent = (Math.floor(Math.random()*18)+3) + ' people viewing';
-  document.getElementById('productModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
+// Product opening logic is handled by openProductById above
 
 function closeModal(id){
   document.getElementById(id).classList.remove('open');
@@ -1522,24 +1774,42 @@ document.querySelectorAll('.modal-overlay').forEach(overlay => {
   });
 });
 
-function changeModalQty(delta){
-  const el = document.getElementById('modalQtyVal');
-  let val = parseInt(el.textContent) + delta;
-  if(val < 1) val = 1;
-  if(val > 99) val = 99;
-  el.textContent = val;
-}
-
 // ====== CHECKOUT FLOW ======
 function openCheckout(){
   const qty = parseInt(document.getElementById('modalQtyVal').textContent);
-  const total = (currentProduct.unitPrice * qty).toFixed(2);
-  document.getElementById('checkoutProduct').textContent = currentProduct.name;
+  const selects = document.querySelectorAll('#modalVariants select');
+  
+  let variantName = '';
+  let finalPrice = activeProduct.price;
+  
+  if(selects.length > 0){
+    const selections = Array.from(selects).map(s => s.options[s.selectedIndex].text);
+    variantName = ` (${selections.join(', ')})`;
+    const vals = Array.from(selects).map(s => s.value);
+    selects.forEach(s => {
+      const opt = s.options[s.selectedIndex];
+      const p = opt.getAttribute('data-price');
+      const pmRaw = opt.getAttribute('data-pricemap');
+      const pm = pmRaw ? JSON.parse(pmRaw) : null;
+      if(p) finalPrice = parseFloat(p);
+      if(pm) { vals.forEach(v => { if(pm[v]) finalPrice = pm[v]; }); }
+    });
+  }
+
+  const total = (finalPrice * qty).toFixed(2);
+  document.getElementById('checkoutProduct').textContent = activeProduct.name + variantName;
   document.getElementById('checkoutQty').textContent = 'x' + qty;
-  document.getElementById('checkoutUnitPrice').textContent = '$' + currentProduct.unitPrice.toFixed(2);
+  document.getElementById('checkoutUnitPrice').textContent = '$' + finalPrice.toFixed(2);
   document.getElementById('checkoutTotal').textContent = '$' + total;
-  currentProduct.qty = qty;
-  currentProduct.total = total;
+  
+  // Update currentProduct for compatibility with old checkout logic
+  currentProduct = {
+    name: activeProduct.name + variantName,
+    unitPrice: finalPrice,
+    qty: qty,
+    total: total
+  };
+  
   closeModal('productModal');
   setTimeout(() => {
     document.getElementById('checkoutModal').classList.add('open');
@@ -1622,17 +1892,39 @@ function copyOrderId(){
 
 let cart = [];
 
-function addToCart(){
+function addToCart() {
   const qty = parseInt(document.getElementById('modalQtyVal').textContent);
-  if(isNaN(qty) || qty < 1) return;
+  const selects = document.querySelectorAll('#modalVariants select');
   
+  let variantName = '';
+  let finalPrice = activeProduct.price;
+  
+  if(selects.length > 0){
+    const selections = Array.from(selects).map(s => s.options[s.selectedIndex].text);
+    variantName = ` (${selections.join(', ')})`;
+    
+    // Recalculate price for variant
+    const vals = Array.from(selects).map(s => s.value);
+    selects.forEach(s => {
+      const opt = s.options[s.selectedIndex];
+      const p = opt.getAttribute('data-price');
+      const pmRaw = opt.getAttribute('data-pricemap');
+      const pm = pmRaw ? JSON.parse(pmRaw) : null;
+      if(p) finalPrice = parseFloat(p);
+      if(pm) {
+        vals.forEach(v => { if(pm[v]) finalPrice = pm[v]; });
+      }
+    });
+  }
+
   const item = {
-    id: Date.now(),
-    name: currentProduct.name,
-    price: currentProduct.unitPrice,
+    id: Date.now(), // Unique ID for cart entries
+    productId: activeProduct.id,
+    name: activeProduct.name + variantName,
+    price: finalPrice,
+    emoji: activeProduct.emoji,
     qty: qty,
-    icon: currentProduct.icon,
-    total: (currentProduct.unitPrice * qty).toFixed(2)
+    total: (finalPrice * qty).toFixed(2)
   };
   
   cart.push(item);

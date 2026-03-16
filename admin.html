@@ -642,14 +642,172 @@ textarea.form-input{resize:vertical;min-height:80px}
 <script>
 // ====== DEFAULT DATA ======
 const DEFAULT_PRODUCTS = [
-  { id:1, name:'Netflix Premium', price:2.99, stock:15, category:'Streaming', emoji:'🎥', desc:'Premium Netflix account with 4K UHD streaming.', status:'active' },
-  { id:2, name:'Spotify Premium', price:1.50, stock:20, category:'Streaming', emoji:'🎵', desc:'Spotify Premium individual account.', status:'active' },
-  { id:3, name:'Discord Nitro 1 Month', price:1.80, stock:35, category:'Discord Decor', emoji:'💎', desc:'Full Discord Nitro with all premium features.', status:'active' },
-  { id:4, name:'Discord Server Boost', price:0.50, stock:50, category:'Discord', emoji:'💬', desc:'1x Server boost for any Discord server.', status:'active' },
-  { id:5, name:'Instagram Followers 1k', price:3.00, stock:100, category:'Social Media', emoji:'📱', desc:'1000 real Instagram followers delivered gradually.', status:'active' },
-  { id:6, name:'TikTok Likes 5k', price:2.50, stock:80, category:'Social Media', emoji:'📱', desc:'5000 TikTok likes on any public video.', status:'active' },
-  { id:7, name:'Prize Picks $10 Balance', price:5.00, stock:10, category:'Prize Picks', emoji:'🎲', desc:'$10 Prize Picks balance added to your account.', status:'active' },
-  { id:8, name:'Roblox 800 Robux', price:4.99, stock:25, category:'Roblox', emoji:'🎮', desc:'800 Robux gift card code delivered instantly.', status:'active' },
+  { 
+    id:1, name:'Discord Members', price:2.50, stock:999, category:'Discord', emoji:'👤', 
+    desc:'High-quality Discord members for your server.', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: 'Offline', value: 'offline' },
+          { label: 'Online', value: 'online' }
+        ]
+      },
+      {
+        name: 'Amount',
+        choices: [
+          { label: '250 Members', value: 250, priceMap: { offline: 2.50, online: 5.00 } },
+          { label: '500 Members', value: 500, priceMap: { offline: 4.50, online: 9.00 } },
+          { label: '750 Members', value: 750, priceMap: { offline: 6.00, online: 12.00 } },
+          { label: '1000 Members', value: 1000, priceMap: { offline: 8.00, online: 15.00 } }
+        ]
+      }
+    ]
+  },
+  {
+    id:2, name:'Discord Server Boosts', price:5.00, stock:999, category:'Discord', emoji:'🚀',
+    desc:'14x Server Boosts for your Discord community.', status:'active',
+    options: [
+      {
+        name: 'Duration',
+        choices: [
+          { label: '1 Month', value: '1m', price: 5.00 },
+          { label: '2 Months', value: '2m', price: 9.00 },
+          { label: '3 Months', value: '3m', price: 12.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:3, name:'Discord Aged Accounts', price:5.00, stock:50, category:'Discord', emoji:'👤',
+    desc:'Vintage Discord accounts for various needs.', status:'active',
+    options: [
+      {
+        name: 'Year',
+        choices: [
+          { label: '2016', value: 2016, price: 10.00 },
+          { label: '2018', value: 2018, price: 7.00 },
+          { label: '2019', value: 2019, price: 5.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:4, name:'Discord Token', price:4.00, stock:100, category:'Discord', emoji:'🔑',
+    desc:'Discord token valid for 3 months.', status:'active'
+  },
+  {
+    id:5, name:'Spotify Premium', price:3.00, stock:100, category:'Streaming', emoji:'🎵',
+    desc:'Premium music streaming experience.', status:'active',
+    options: [
+      {
+        name: 'Plan',
+        choices: [
+          { label: '2 Months', value: '2m', price: 3.00 },
+          { label: '3 Months', value: '3m', price: 4.50 },
+          { label: 'Lifetime', value: 'life', price: 15.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:6, name:'YouTube Premium', price:2.50, stock:100, category:'Streaming', emoji:'📺',
+    desc:'Ad-free YouTube and background play (1 Month).', status:'active'
+  },
+  {
+    id:7, name:'Netflix Lifetime', price:20.00, stock:50, category:'Streaming', emoji:'🎥',
+    desc:'Permanent Netflix access.', status:'active'
+  },
+  {
+    id:8, name:'Disney+ Lifetime', price:15.00, stock:50, category:'Streaming', emoji:'🎬',
+    desc:'Permanent Disney+ access.', status:'active'
+  },
+  {
+    id:9, name:'ChatGPT Plus', price:10.00, stock:50, category:'Software', emoji:'🤖',
+    desc:'ChatGPT Plus subscription for 1 month.', status:'active'
+  },
+  {
+    id:10, name:'CapCut Lifetime', price:12.00, stock:50, category:'Software', emoji:'✂️',
+    desc:'Permanent access to CapCut Pro features.', status:'active'
+  },
+  {
+    id:11, name:'NordVPN', price:5.00, stock:100, category:'Software', emoji:'🛡️',
+    desc:'Secure and private internet access.', status:'active',
+    options: [
+      {
+        name: 'Duration',
+        choices: [
+          { label: '6 Months', value: '6m', price: 5.00 },
+          { label: '1 Year', value: '1y', price: 8.00 },
+          { label: '2 Years', value: '2y', price: 12.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:12, name:'Steam Account', price:15.00, stock:20, category:'Gaming', emoji:'🎮',
+    desc:'Full access gaming account.', status:'active'
+  },
+  {
+    id:13, name:'Xbox Game Pass', price:4.00, stock:50, category:'Gaming', emoji:'🎮',
+    desc:'Access to hundreds of games (1 Month).', status:'active'
+  },
+  {
+    id:14, name:'Ulta Accounts', price:10.00, stock:10, category:'Accounts', emoji:'🛍️',
+    desc:'Ulta accounts with various balances.', status:'active',
+    options: [
+      {
+        name: 'Balance',
+        choices: [
+          { label: '$70-$120', value: '70-120', price: 10.00 },
+          { label: '$200-$300', value: '200-300', price: 25.00 },
+          { label: '$300-$400', value: '300-400', price: 35.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:15, name:'Other Accounts', price:5.00, stock:20, category:'Accounts', emoji:'🛍️',
+    desc:'Miscellaneous store accounts with balances.', status:'active',
+    options: [
+      {
+        name: 'Balance Range',
+        choices: [
+          { label: '$30-$50', value: '30-50', price: 5.00 },
+          { label: '$50-$70', value: '50-70', price: 8.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:16, name:'TikTok Services', price:0.50, stock:999, category:'Social Media', emoji:'📈',
+    desc:'Boost your TikTok presence instantly.', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: '1K Views', value: 'views', price: 0.50 },
+          { label: '1K Shares', value: 'shares', price: 1.50 },
+          { label: '1K Likes', value: 'likes', price: 2.00 },
+          { label: '1K Followers [REAL]', value: 'followers', price: 5.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:17, name:'Instagram Services', price:0.80, stock:999, category:'Social Media', emoji:'📸',
+    desc:'Fast growth for your Instagram profile.', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: '1K Views', value: 'views', price: 0.80 },
+          { label: '1K Likes', value: 'likes', price: 1.50 },
+          { label: '1K Followers', value: 'followers', price: 3.00 }
+        ]
+      }
+    ]
+  }
 ];
 
 const DEFAULT_ORDERS = [
@@ -659,12 +817,12 @@ const DEFAULT_ORDERS = [
   { id:'SNOW-D7H5NJ', product:'Instagram Followers 1k', qty:3, total:9.00, method:'Venmo', status:'pending', date:'2026-03-15' },
 ];
 
-const DEFAULT_SETTINGS = {
-  venmo:'@SnowsShop',
-  paypal:'@SnowsShop',
-  zelle:'snow@example.com',
-  discord:'https://discord.gg/FMxy3VBE'
-};
+const DEFAULT_SETTINGS = [
+  { key:'venmo', value:'@SnowsShop' },
+  { key:'paypal', value:'@SnowsShop' },
+  { key:'zelle', value:'snow@example.com' },
+  { key:'discord', value:'https://discord.gg/FMxy3VBE' }
+];
 
 const DEFAULT_CREDS = { username:'admin', password:'snow123' };
 
@@ -679,7 +837,14 @@ let products = load('products', DEFAULT_PRODUCTS);
 let orders = load('orders', DEFAULT_ORDERS);
 let settings = load('settings', DEFAULT_SETTINGS);
 let creds = load('creds', DEFAULT_CREDS);
-let nextId = load('nextId', 9);
+let nextId = load('nextId', 18);
+
+// Force update products if the user approved the consolidation
+if(localStorage.getItem('snow_consolidated') !== 'v1'){
+  products = DEFAULT_PRODUCTS;
+  save('products', products);
+  localStorage.setItem('snow_consolidated', 'v1');
+}
 
 // ====== LOGIN ======
 function attemptLogin(){
