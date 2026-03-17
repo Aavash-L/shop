@@ -236,8 +236,9 @@ tr:hover td{background:rgba(255,255,255,0.015)}
 .product-cell-icon{
   width:40px;height:40px;border-radius:10px;
   background:var(--bg-secondary);display:flex;align-items:center;
-  justify-content:center;font-size:1.2rem;flex-shrink:0;
+  justify-content:center;flex-shrink:0;padding:5px;
 }
+.product-cell-icon img{width:100%;height:100%;object-fit:contain}
 .product-cell-name{font-weight:600}
 .product-cell-cat{font-size:0.78rem;color:var(--text-muted)}
 .badge{
@@ -602,8 +603,8 @@ textarea.form-input{resize:vertical;min-height:80px}
           </select>
         </div>
         <div class="form-group">
-          <label class="form-label">Emoji Icon</label>
-          <input type="text" class="form-input" id="pEmoji" placeholder="💎">
+          <label class="form-label">Emoji / Logo URL</label>
+          <input type="text" class="form-input" id="pEmoji" placeholder="💎 or https://...">
         </div>
       </div>
       <div class="form-group">
@@ -644,6 +645,7 @@ textarea.form-input{resize:vertical;min-height:80px}
 const DEFAULT_PRODUCTS = [
   { 
     id:1, name:'Discord Members', price:2.50, stock:999, category:'Discord', emoji:'👤', 
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'High-quality Discord members for your server.', status:'active',
     options: [
       {
@@ -666,6 +668,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:2, name:'Discord Server Boosts', price:5.00, stock:999, category:'Discord', emoji:'🚀',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'14x Server Boosts for your Discord community.', status:'active',
     options: [
       {
@@ -680,6 +683,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:3, name:'Discord Aged Accounts', price:5.00, stock:50, category:'Discord', emoji:'👤',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'Vintage Discord accounts for various needs.', status:'active',
     options: [
       {
@@ -694,10 +698,12 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:4, name:'Discord Token', price:4.00, stock:100, category:'Discord', emoji:'🔑',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'Discord token valid for 3 months.', status:'active'
   },
   {
     id:5, name:'Spotify Services', price:3.00, stock:100, category:'Streaming', emoji:'🎵',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/spotify.svg',
     desc:'Premium music streaming and promotion.', status:'active',
     options: [
       {
@@ -714,6 +720,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:6, name:'YouTube Services', price:2.50, stock:100, category:'Streaming', emoji:'📺',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/youtube.svg',
     desc:'Premium YouTube experience and channel growth.', status:'active',
     options: [
       {
@@ -729,6 +736,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:7, name:'Netflix', price:5.00, stock:50, category:'Streaming', emoji:'🎥',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg',
     desc:'High-quality Netflix accounts.', status:'active',
     options: [
       {
@@ -743,6 +751,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:8, name:'Disney+', price:4.00, stock:50, category:'Streaming', emoji:'🎬',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/disneyplus.svg',
     desc:'Premium Disney+ access.', status:'active',
     options: [
       {
@@ -757,6 +766,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:9, name:'Paramount+', price:3.00, stock:50, category:'Streaming', emoji:'🏔️',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/paramountplus.svg',
     desc:'Exclusive shows and movies.', status:'active',
     options: [
       {
@@ -771,10 +781,12 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:10, name:'CapCut Lifetime', price:12.00, stock:50, category:'Software', emoji:'✂️',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/capcut.svg',
     desc:'Permanent access to CapCut Pro features.', status:'active'
   },
   {
     id:11, name:'NordVPN', price:5.00, stock:100, category:'Software', emoji:'🛡️',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/nordvpn.svg',
     desc:'Secure and private internet access.', status:'active',
     options: [
       {
@@ -789,6 +801,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:12, name:'Gaming Accounts', price:15.00, stock:20, category:'Gaming', emoji:'🎮',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/steam.svg',
     desc:'Full access gaming accounts.', status:'active',
     options: [
       {
@@ -925,10 +938,11 @@ let creds = load('creds', DEFAULT_CREDS);
 let nextId = load('nextId', 20);
 
 // Force update products if the user approved the consolidation
-if(localStorage.getItem('snow_consolidated') !== 'v2'){
-  products = DEFAULT_PRODUCTS;
-  save('products', products);
-  localStorage.setItem('snow_consolidated', 'v2');
+const version = localStorage.getItem('snow_consolidated');
+if (version !== 'v3') {
+  products = DEFAULT_PRODUCTS; // Update the 'products' variable directly
+  localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
+  localStorage.setItem('snow_consolidated', 'v3');
 }
 
 // Force update settings for new handles
@@ -1048,12 +1062,12 @@ function renderProducts(){
     <tr>
       <td>
         <div class="product-cell">
-          <div class="product-cell-icon">${p.emoji}</div>
-          <div>
-            <div class="product-cell-name">${p.name}</div>
-            <div class="product-cell-cat">${p.desc.substring(0,40)}...</div>
-          </div>
+        <div class="product-cell-icon">${p.logo ? `<img src="${p.logo}" alt="${p.name}">` : p.emoji}</div>
+        <div>
+          <div class="product-cell-name">${p.name}</div>
+          <div class="product-cell-cat">${p.category}</div>
         </div>
+      </div>
       </td>
       <td style="font-weight:600">$${p.price.toFixed(2)}</td>
       <td>${p.stock > 0 ? p.stock : '<span style="color:var(--red)">0</span>'}</td>
@@ -1093,7 +1107,7 @@ function openProductForm(id){
       document.getElementById('pPrice').value = p.price;
       document.getElementById('pStock').value = p.stock;
       document.getElementById('pCategory').value = p.category;
-      document.getElementById('pEmoji').value = p.emoji;
+      document.getElementById('pEmoji').value = p.logo || p.emoji;
       document.getElementById('pDesc').value = p.desc;
       document.getElementById('productFormTitle').textContent = 'Edit Product';
     }
@@ -1103,14 +1117,21 @@ function openProductForm(id){
 
 function saveProduct(){
   const id = document.getElementById('editProductId').value;
-  const name = document.getElementById('pName').value.trim();
-  const price = parseFloat(document.getElementById('pPrice').value);
-  const stock = parseInt(document.getElementById('pStock').value);
-  const category = document.getElementById('pCategory').value;
-  const emoji = document.getElementById('pEmoji').value.trim() || '📦';
-  const desc = document.getElementById('pDesc').value.trim();
+  const emojiInput = document.getElementById('pEmoji').value;
+  const isUrl = emojiInput.startsWith('http');
+  
+  const productData = {
+    name: document.getElementById('pName').value.trim(),
+    price: parseFloat(document.getElementById('pPrice').value),
+    stock: parseInt(document.getElementById('pStock').value),
+    category: document.getElementById('pCategory').value,
+    emoji: isUrl ? '📦' : emojiInput.trim() || '📦', // Default emoji if not a URL and input is empty
+    logo: isUrl ? emojiInput.trim() : '',
+    desc: document.getElementById('pDesc').value.trim(),
+    status: 'active'
+  };
 
-  if(!name || isNaN(price) || isNaN(stock)){
+  if(!productData.name || isNaN(productData.price) || isNaN(productData.stock)){
     showToast('Please fill all required fields', 'error');
     return;
   }

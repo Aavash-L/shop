@@ -255,6 +255,13 @@ section{padding:100px 60px}
 .category-img-inner{
   width:100%;height:100%;display:flex;align-items:center;justify-content:center;
   font-size:3rem;transition:var(--transition);
+  padding: 30px;
+}
+.category-img-inner img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
 }
 .category-card:hover .category-img-inner{transform:scale(1.05)}
 .category-overlay{
@@ -290,7 +297,8 @@ section{padding:100px 60px}
   position:absolute;inset:0;
   background:linear-gradient(135deg,rgba(108,92,231,0.1),rgba(0,210,160,0.05));
 }
-.product-media-icon{font-size:5rem;position:relative;z-index:1}
+.product-media-icon{width:100px;height:100px;position:relative;z-index:1;display:flex;align-items:center;justify-content:center}
+.product-media-icon img{width:100%;height:100%;object-fit:contain;filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2))}
 .product-details h2{
   font-family:var(--font-display);font-size:2rem;font-weight:800;
   letter-spacing:-0.5px;margin-bottom:8px;
@@ -569,7 +577,8 @@ section{padding:100px 60px}
   background:linear-gradient(135deg,rgba(255,46,46,0.08),rgba(255,255,255,0.02));
   border-right:1px solid var(--border);min-height:300px;
 }
-.modal-media-icon{font-size:5rem}
+.modal-media-icon{width:120px;height:120px;display:flex;align-items:center;justify-content:center}
+.modal-media-icon img{width:100%;height:100%;object-fit:contain;filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2))}
 .modal-info{padding:32px}
 .modal-info h2{
   font-family:var(--font-display);font-size:1.5rem;font-weight:800;
@@ -796,7 +805,8 @@ section{padding:100px 60px}
   border:1px solid var(--border);border-radius:var(--radius-sm);
   position:relative;
 }
-.cart-item-icon{font-size:1.5rem;width:48px;height:48px;background:var(--bg-secondary);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cart-item-icon{width:48px;height:48px;background:var(--bg-secondary);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;padding:8px}
+.cart-item-icon img{width:100%;height:100%;object-fit:contain}
 .cart-item-info{flex:1}
 .cart-item-name{font-weight:700;font-size:0.95rem;margin-bottom:4px}
 .cart-item-details{font-size:0.8rem;color:var(--text-muted)}
@@ -1368,6 +1378,7 @@ window.addEventListener('load', () => {
 const DEFAULT_PRODUCTS = [
   { 
     id:1, name:'Discord Members', price:2.50, stock:999, category:'Discord', emoji:'👤', 
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'High-quality Discord members for your server.', status:'active',
     options: [
       {
@@ -1390,6 +1401,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:2, name:'Discord Server Boosts', price:5.00, stock:999, category:'Discord', emoji:'🚀',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'14x Server Boosts for your Discord community.', status:'active',
     options: [
       {
@@ -1404,6 +1416,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:3, name:'Discord Aged Accounts', price:5.00, stock:50, category:'Discord', emoji:'👤',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'Vintage Discord accounts for various needs.', status:'active',
     options: [
       {
@@ -1418,10 +1431,12 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:4, name:'Discord Token', price:4.00, stock:100, category:'Discord', emoji:'🔑',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'Discord token valid for 3 months.', status:'active'
   },
   {
     id:5, name:'Spotify Services', price:3.00, stock:100, category:'Streaming', emoji:'🎵',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/spotify.svg',
     desc:'Premium music streaming and promotion.', status:'active',
     options: [
       {
@@ -1438,6 +1453,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:6, name:'YouTube Services', price:2.50, stock:100, category:'Streaming', emoji:'📺',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/youtube.svg',
     desc:'Premium YouTube experience and channel growth.', status:'active',
     options: [
       {
@@ -1453,6 +1469,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:7, name:'Netflix', price:5.00, stock:50, category:'Streaming', emoji:'🎥',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg',
     desc:'High-quality Netflix accounts.', status:'active',
     options: [
       {
@@ -1467,6 +1484,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:8, name:'Disney+', price:4.00, stock:50, category:'Streaming', emoji:'🎬',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/disneyplus.svg',
     desc:'Premium Disney+ access.', status:'active',
     options: [
       {
@@ -1481,6 +1499,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:9, name:'Paramount+', price:3.00, stock:50, category:'Streaming', emoji:'🏔️',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/paramountplus.svg',
     desc:'Exclusive shows and movies.', status:'active',
     options: [
       {
@@ -1495,10 +1514,12 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:10, name:'CapCut Lifetime', price:12.00, stock:50, category:'Software', emoji:'✂️',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/capcut.svg',
     desc:'Permanent access to CapCut Pro features.', status:'active'
   },
   {
     id:11, name:'NordVPN', price:5.00, stock:100, category:'Software', emoji:'🛡️',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/nordvpn.svg',
     desc:'Secure and private internet access.', status:'active',
     options: [
       {
@@ -1513,6 +1534,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:12, name:'Gaming Accounts', price:15.00, stock:20, category:'Gaming', emoji:'🎮',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/steam.svg',
     desc:'Full access gaming accounts.', status:'active',
     options: [
       {
@@ -1526,6 +1548,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:13, name:'Discord Products', price:1.80, stock:999, category:'Discord', emoji:'💎',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'Exclusive Discord enhancements.', status:'active',
     options: [
       {
@@ -1540,6 +1563,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:14, name:'Roblox Accounts', price:5.00, stock:500, category:'Roblox', emoji:'🤖',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/roblox.svg',
     desc:'Premium Roblox accounts for all needs.', status:'active',
     options: [
       {
@@ -1555,6 +1579,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:15, name:'Store Accounts', price:5.00, stock:100, category:'Accounts', emoji:'🛍️',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/prizepicks.svg', // Fallback or common
     desc:'Retail accounts with balances.', status:'active',
     options: [
       {
@@ -1571,6 +1596,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:16, name:'TikTok Services', price:0.50, stock:999, category:'Social Media', emoji:'📈',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/tiktok.svg',
     desc:'Boost your TikTok presence instantly.', status:'active',
     options: [
       {
@@ -1586,6 +1612,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:17, name:'Instagram Services', price:0.80, stock:999, category:'Social Media', emoji:'📸',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/instagram.svg',
     desc:'Fast growth for your Instagram profile.', status:'active',
     options: [
       {
@@ -1600,10 +1627,12 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:18, name:'Discord Accounts', price:5.00, stock:100, category:'Discord', emoji:'👤',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
     desc:'Verified Discord accounts (EV).', status:'active'
   },
   {
     id:19, name:'Digital Tools', price:10.00, stock:999, category:'Tools', emoji:'💻',
+    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/visualstudiocode.svg', // Generic dev tool
     desc:'Powerful software and generators (Lifetime).', status:'active',
     options: [
       {
@@ -1622,9 +1651,9 @@ const DEFAULT_PRODUCTS = [
 function loadProducts() {
   try {
     const version = localStorage.getItem('snow_consolidated');
-    if (version !== 'v2') {
+    if (version !== 'v3') {
       localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-      localStorage.setItem('snow_consolidated', 'v2');
+      localStorage.setItem('snow_consolidated', 'v3');
       return DEFAULT_PRODUCTS;
     }
     const saved = localStorage.getItem('snow_products');
@@ -1660,7 +1689,9 @@ function renderProducts() {
     return `
       <div class="category-card reveal" style="transition-delay: ${index * 0.05}s" onclick="openProductById(${p.id})">
         <div class="category-img">
-          <div class="category-img-inner">${p.emoji}</div>
+          <div class="category-img-inner">
+            ${p.logo ? `<img src="${p.logo}" alt="${p.name}">` : p.emoji}
+          </div>
           <div class="category-overlay"></div>
         </div>
         <div class="category-info">
@@ -1690,7 +1721,7 @@ function openProductById(id) {
   
   activeProduct = p;
   
-  document.getElementById('modalIcon').innerText = p.emoji;
+  document.getElementById('modalIcon').innerHTML = p.logo ? `<img src="${p.logo}" alt="${p.name}">` : p.emoji;
   document.getElementById('modalTitle').innerText = p.name;
   document.getElementById('modalPrice').innerText = `$${p.price.toFixed(2)}`;
   document.getElementById('modalStock').innerText = `${p.stock} in stock`;
@@ -2045,6 +2076,7 @@ function addToCart() {
     name: activeProduct.name + variantName,
     price: finalPrice,
     emoji: activeProduct.emoji,
+    logo: activeProduct.logo,
     qty: qty,
     total: (finalPrice * qty).toFixed(2)
   };
@@ -2086,7 +2118,7 @@ function updateCartUI(){
     subtotal += parseFloat(item.total);
     return `
       <div class="cart-item">
-        <div class="cart-item-icon">${item.emoji}</div>
+        <div class="cart-item-icon">${item.logo ? `<img src="${item.logo}" alt="${item.name}">` : item.emoji}</div>
         <div class="cart-item-info">
           <div class="cart-item-name">${item.name}</div>
           <div class="cart-item-details">Qty: ${item.qty} &bull; $${item.price.toFixed(2)} each</div>
