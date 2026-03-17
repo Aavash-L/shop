@@ -530,6 +530,14 @@ textarea.form-input{resize:vertical;min-height:80px}
         <div class="table-header"><span class="table-title">Payment Handles</span></div>
         <div style="padding:24px">
           <div class="form-group">
+            <label class="form-label">Apple Pay Handle</label>
+            <input type="text" class="form-input" id="setApplepay" placeholder="snowyshop">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cash App Handle</label>
+            <input type="text" class="form-input" id="setCashapp" placeholder="$snowyshop">
+          </div>
+          <div class="form-group">
             <label class="form-label">Venmo Handle</label>
             <input type="text" class="form-input" id="setVenmo" placeholder="@YourVenmo">
           </div>
@@ -916,10 +924,12 @@ const DEFAULT_ORDERS = [
 ];
 
 const DEFAULT_SETTINGS = [
+  { key:'applepay', value:'snowyshop' },
+  { key:'cashapp', value:'$snowyshop' },
   { key:'venmo', value:'snowyshop' },
   { key:'paypal', value:'Snowshops' },
   { key:'zelle', value:'669-298-2063' },
-  { key:'discord', value:'https://discord.gg/FMxy3VBE' }
+  { key:'discord', value:'https://discord.gg/VQh5sgPFQB' }
 ];
 
 const DEFAULT_CREDS = { username:'admin', password:'snow123' };
@@ -946,10 +956,10 @@ if (version !== 'v4') {
 }
 
 // Force update settings for new handles
-if(localStorage.getItem('snow_settings_version') !== 'v1'){
+if(localStorage.getItem('snow_settings_version') !== 'v2'){
   settings = DEFAULT_SETTINGS;
   save('settings', settings);
-  localStorage.setItem('snow_settings_version', 'v1');
+  localStorage.setItem('snow_settings_version', 'v2');
 }
 
 // ====== LOGIN ======
@@ -1252,6 +1262,8 @@ function confirmDeleteOrder(idx){
 
 // ====== SETTINGS ======
 function loadSettings(){
+  document.getElementById('setApplepay').value = settings.applepay || '';
+  document.getElementById('setCashapp').value = settings.cashapp || '';
   document.getElementById('setVenmo').value = settings.venmo || '';
   document.getElementById('setPaypal').value = settings.paypal || '';
   document.getElementById('setZelle').value = settings.zelle || '';
@@ -1259,6 +1271,8 @@ function loadSettings(){
   document.getElementById('setUsername').value = creds.username || '';
 }
 function saveSettings(){
+  settings.applepay = document.getElementById('setApplepay').value.trim();
+  settings.cashapp = document.getElementById('setCashapp').value.trim();
   settings.venmo = document.getElementById('setVenmo').value.trim();
   settings.paypal = document.getElementById('setPaypal').value.trim();
   settings.zelle = document.getElementById('setZelle').value.trim();
