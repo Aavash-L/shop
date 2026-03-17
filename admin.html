@@ -645,7 +645,7 @@ textarea.form-input{resize:vertical;min-height:80px}
 const DEFAULT_PRODUCTS = [
   { 
     id:1, name:'Discord Members', price:2.50, stock:999, category:'Discord', emoji:'👤', 
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
+    logo:'https://cdn.simpleicons.org/discord/white',
     desc:'High-quality Discord members for your server.', status:'active',
     options: [
       {
@@ -668,7 +668,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:2, name:'Discord Server Boosts', price:5.00, stock:999, category:'Discord', emoji:'🚀',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
+    logo:'https://cdn.simpleicons.org/discord/white',
     desc:'14x Server Boosts for your Discord community.', status:'active',
     options: [
       {
@@ -683,7 +683,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:3, name:'Discord Aged Accounts', price:5.00, stock:50, category:'Discord', emoji:'👤',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
+    logo:'https://cdn.simpleicons.org/discord/white',
     desc:'Vintage Discord accounts for various needs.', status:'active',
     options: [
       {
@@ -698,12 +698,12 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:4, name:'Discord Token', price:4.00, stock:100, category:'Discord', emoji:'🔑',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/discord.svg',
+    logo:'https://cdn.simpleicons.org/discord/white',
     desc:'Discord token valid for 3 months.', status:'active'
   },
   {
     id:5, name:'Spotify Services', price:3.00, stock:100, category:'Streaming', emoji:'🎵',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/spotify.svg',
+    logo:'https://cdn.simpleicons.org/spotify/white',
     desc:'Premium music streaming and promotion.', status:'active',
     options: [
       {
@@ -720,7 +720,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:6, name:'YouTube Services', price:2.50, stock:100, category:'Streaming', emoji:'📺',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/youtube.svg',
+    logo:'https://cdn.simpleicons.org/youtube/white',
     desc:'Premium YouTube experience and channel growth.', status:'active',
     options: [
       {
@@ -736,7 +736,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:7, name:'Netflix', price:5.00, stock:50, category:'Streaming', emoji:'🎥',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/netflix.svg',
+    logo:'https://cdn.simpleicons.org/netflix/white',
     desc:'High-quality Netflix accounts.', status:'active',
     options: [
       {
@@ -751,7 +751,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:8, name:'Disney+', price:4.00, stock:50, category:'Streaming', emoji:'🎬',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/disneyplus.svg',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg',
     desc:'Premium Disney+ access.', status:'active',
     options: [
       {
@@ -766,7 +766,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:9, name:'Paramount+', price:3.00, stock:50, category:'Streaming', emoji:'🏔️',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/paramountplus.svg',
+    logo:'https://cdn.simpleicons.org/paramountplus/white',
     desc:'Exclusive shows and movies.', status:'active',
     options: [
       {
@@ -781,12 +781,12 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:10, name:'CapCut Lifetime', price:12.00, stock:50, category:'Software', emoji:'✂️',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/capcut.svg',
+    logo:'https://upload.wikimedia.org/wikipedia/commons/2/2a/Capcut-logo.svg',
     desc:'Permanent access to CapCut Pro features.', status:'active'
   },
   {
     id:11, name:'NordVPN', price:5.00, stock:100, category:'Software', emoji:'🛡️',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/nordvpn.svg',
+    logo:'https://cdn.simpleicons.org/nordvpn/white',
     desc:'Secure and private internet access.', status:'active',
     options: [
       {
@@ -801,7 +801,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:12, name:'Gaming Accounts', price:15.00, stock:20, category:'Gaming', emoji:'🎮',
-    logo:'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/steam.svg',
+    logo:'https://cdn.simpleicons.org/steam/white',
     desc:'Full access gaming accounts.', status:'active',
     options: [
       {
@@ -939,10 +939,10 @@ let nextId = load('nextId', 20);
 
 // Force update products if the user approved the consolidation
 const version = localStorage.getItem('snow_consolidated');
-if (version !== 'v3') {
-  products = DEFAULT_PRODUCTS; // Update the 'products' variable directly
+if (version !== 'v4') {
+  products = DEFAULT_PRODUCTS;
   localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-  localStorage.setItem('snow_consolidated', 'v3');
+  localStorage.setItem('snow_consolidated', 'v4');
 }
 
 // Force update settings for new handles
