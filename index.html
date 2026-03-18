@@ -1405,7 +1405,7 @@ window.addEventListener('load', () => {
 // ====== PRODUCT DATA & LOADING ======
 const DEFAULT_PRODUCTS = [
   { 
-    id:1, name:'Discord Members', price:2.50, stock:999, category:'Discord', emoji:'👤', 
+    id:1, name:'Discord Members', price:1.00, stock:999, category:'Discord', emoji:'👤', 
     logo:'https://cdn.simpleicons.org/discord/white',
     desc:'High-quality Discord members for your server.', status:'active',
     options: [
@@ -1419,146 +1419,132 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Amount',
         choices: [
-          { label: '250 Members', value: 250, priceMap: { offline: 2.50, online: 5.00 } },
-          { label: '500 Members', value: 500, priceMap: { offline: 4.50, online: 9.00 } },
-          { label: '750 Members', value: 750, priceMap: { offline: 6.00, online: 12.00 } },
-          { label: '1000 Members', value: 1000, priceMap: { offline: 8.00, online: 15.00 } }
+          { label: '250 Members', value: 250, priceMap: { offline: 1.00, online: 2.00 } },
+          { label: '500 Members', value: 500, priceMap: { offline: 2.00, online: 4.00 } },
+          { label: '750 Members', value: 750, priceMap: { offline: 3.00, online: 6.00 } },
+          { label: '1000 Members', value: 1000, priceMap: { offline: 4.00, online: 8.00 } }
         ]
       }
     ]
   },
   {
-    id:2, name:'Discord Server Boosts', price:5.00, stock:999, category:'Discord', emoji:'🚀',
+    id:2, name:'Discord Server Boosts', price:15.00, stock:999, category:'Discord', emoji:'🚀',
     logo:'https://cdn.simpleicons.org/discord/white',
     desc:'14x Server Boosts for your Discord community.', status:'active',
     options: [
       {
         name: 'Duration',
         choices: [
-          { label: '1 Month', value: '1m', price: 5.00 },
-          { label: '2 Months', value: '2m', price: 9.00 },
-          { label: '3 Months', value: '3m', price: 12.00 }
+          { label: '1 Month', value: '1m', price: 15.00 },
+          { label: '2 Months', value: '2m', price: 23.00 },
+          { label: '3 Months', value: '3m', price: 30.00 }
         ]
       }
     ]
   },
   {
-    id:3, name:'Discord Aged Accounts', price:5.00, stock:50, category:'Discord', emoji:'👤',
+    id:3, name:'Discord Aged Accounts', price:3.00, stock:50, category:'Discord', emoji:'👤',
     logo:'https://cdn.simpleicons.org/discord/white',
-    desc:'Vintage Discord accounts for various needs.', status:'active',
+    desc:'Vintage Discord accounts for various needs. FA Available.', status:'active',
     options: [
       {
         name: 'Year',
         choices: [
-          { label: '2016', value: 2016, price: 10.00 },
-          { label: '2018', value: 2018, price: 7.00 },
-          { label: '2019', value: 2019, price: 5.00 }
+          { label: '2016 Accounts (Full Access)', value: 2016, price: 8.00 },
+          { label: '2018 Accounts', value: 2018, price: 5.00 },
+          { label: '2019 Accounts', value: 2019, price: 3.00 }
         ]
       }
     ]
   },
   {
-    id:4, name:'Discord Token', price:4.00, stock:100, category:'Discord', emoji:'🔑',
+    id:4, name:'Discord Nitro Tokens', price:5.00, stock:100, category:'Discord', emoji:'🎁',
     logo:'https://cdn.simpleicons.org/discord/white',
-    desc:'Discord token valid for 3 months.', status:'active'
+    desc:'3 Month Nitro Token. Fast Delivery.', status:'active'
   },
   {
-    id:5, name:'Spotify Services', price:3.00, stock:100, category:'Streaming', emoji:'🎵',
+    id:5, name:'Spotify Services', price:2.00, stock:100, category:'Streaming', emoji:'🎵',
     logo:'https://cdn.simpleicons.org/spotify/white',
-    desc:'Premium music streaming and promotion.', status:'active',
+    desc:'Premium music streaming and promotion. No streams.', status:'active',
     options: [
       {
         name: 'Type',
         choices: [
-          { label: '2 Months', value: '2m', price: 3.00 },
-          { label: '3 Months', value: '3m', price: 4.50 },
-          { label: 'Lifetime', value: 'life', price: 15.00 },
-          { label: '1K Streams', value: '1k_streams', price: 5.00 },
-          { label: 'Playlist Followers', value: 'followers', price: 8.00 }
+          { label: '2 Months Premium', value: '2m', price: 2.00 },
+          { label: '3 Months Premium', value: '3m', price: 5.00 },
+          { label: 'Lifetime Premium', value: 'life', price: 15.00 },
+          { label: '1K Followers', value: 'followers', price: 5.00 }
         ]
       }
     ]
   },
   {
-    id:6, name:'YouTube Services', price:2.50, stock:100, category:'Streaming', emoji:'📺',
+    id:6, name:'YouTube Services', price:10.00, stock:100, category:'Streaming', emoji:'📺',
     logo:'https://cdn.simpleicons.org/youtube/white',
-    desc:'Premium YouTube experience and channel growth.', status:'active',
+    desc:'Channel growth services. No views, no likes, no YouTube+.', status:'active',
     options: [
       {
         name: 'Type',
         choices: [
-          { label: '1 Month Premium', value: '1m', price: 2.50 },
-          { label: '1K Views', value: '1k_views', price: 3.00 },
-          { label: '1K Likes', value: '1k_likes', price: 1.50 },
           { label: '1K Subscribers', value: '1k_subs', price: 10.00 }
         ]
       }
     ]
   },
   {
-    id:7, name:'Netflix', price:5.00, stock:50, category:'Streaming', emoji:'🎥',
+    id:7, name:'Netflix', price:2.00, stock:50, category:'Streaming', emoji:'🎥',
     logo:'https://cdn.simpleicons.org/netflix/white',
     desc:'High-quality Netflix accounts.', status:'active',
     options: [
       {
         name: 'Duration',
         choices: [
-          { label: '1 Month', value: '1m', price: 5.00 },
-          { label: '3 Months', value: '3m', price: 12.00 },
-          { label: 'Lifetime', value: 'life', price: 25.00 }
+          { label: '1 Month', value: '1m', price: 2.00 },
+          { label: '3 Months', value: '3m', price: 5.00 },
+          { label: 'Lifetime', value: 'life', price: 8.00 }
         ]
       }
     ]
   },
   {
-    id:8, name:'Disney+', price:4.00, stock:50, category:'Streaming', emoji:'🎬',
+    id:8, name:'Disney+', price:1.50, stock:50, category:'Streaming', emoji:'🎬',
     logo:'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg',
     desc:'Premium Disney+ access.', status:'active',
     options: [
       {
         name: 'Duration',
         choices: [
-          { label: '1 Month', value: '1m', price: 4.00 },
-          { label: '3 Months', value: '3m', price: 10.00 },
-          { label: 'Lifetime', value: 'life', price: 20.00 }
+          { label: '1 Month', value: '1m', price: 1.50 },
+          { label: '3 Months', value: '3m', price: 3.00 },
+          { label: 'Lifetime', value: 'life', price: 5.00 }
         ]
       }
     ]
   },
   {
-    id:9, name:'Paramount+', price:3.00, stock:50, category:'Streaming', emoji:'🏔️',
+    id:9, name:'Paramount+', price:1.98, stock:50, category:'Streaming', emoji:'🏔️',
     logo:'https://cdn.simpleicons.org/paramountplus/white',
     desc:'Exclusive shows and movies.', status:'active',
     options: [
       {
         name: 'Duration',
         choices: [
-          { label: '1 Month', value: '1m', price: 3.00 },
-          { label: '3 Months', value: '3m', price: 8.00 },
-          { label: 'Lifetime', value: 'life', price: 18.00 }
+          { label: '1 Month', value: '1m', price: 1.98 },
+          { label: '2 Months', value: '2m', price: 3.98 },
+          { label: 'Lifetime', value: 'life', price: 5.98 }
         ]
       }
     ]
   },
   {
-    id:10, name:'CapCut Lifetime', price:12.00, stock:50, category:'Software', emoji:'✂️',
+    id:10, name:'CapCut Lifetime', price:6.00, stock:50, category:'Software', emoji:'✂️',
     logo:'https://upload.wikimedia.org/wikipedia/commons/2/2a/Capcut-logo.svg',
     desc:'Permanent access to CapCut Pro features.', status:'active'
   },
   {
-    id:11, name:'NordVPN', price:5.00, stock:100, category:'Software', emoji:'🛡️',
-    logo:'https://cdn.simpleicons.org/nordvpn/white',
-    desc:'Secure and private internet access.', status:'active',
-    options: [
-      {
-        name: 'Duration',
-        choices: [
-          { label: '6 Months', value: '6m', price: 5.00 },
-          { label: '1 Year', value: '1y', price: 8.00 },
-          { label: '2 Years', value: '2y', price: 12.00 }
-        ]
-      }
-    ]
+    id:11, name:'ChatGPT Access', price:3.00, stock:100, category:'Software', emoji:'🤖',
+    logo:'https://cdn.simpleicons.org/openai/white',
+    desc:'1 Month Access to ChatGPT Premium features.', status:'active'
   },
   {
     id:12, name:'Gaming Accounts', price:15.00, stock:20, category:'Gaming', emoji:'🎮',
@@ -1575,22 +1561,7 @@ const DEFAULT_PRODUCTS = [
     ]
   },
   {
-    id:13, name:'Discord Products', price:1.80, stock:999, category:'Discord', emoji:'💎',
-    logo:'https://cdn.simpleicons.org/discord/white',
-    desc:'Exclusive Discord enhancements.', status:'active',
-    options: [
-      {
-        name: 'Type',
-        choices: [
-          { label: 'Nitro (1 Month)', value: 'nitro_1m', price: 1.80 },
-          { label: '14x Boost (1 Month)', value: 'boost_1m', price: 5.00 },
-          { label: 'Nitro Giftlink (1 Month)', value: 'giftlink_1m', price: 4.00 }
-        ]
-      }
-    ]
-  },
-  {
-    id:14, name:'Roblox Accounts', price:5.00, stock:500, category:'Roblox', emoji:'🤖',
+    id:13, name:'Roblox Accounts', price:5.00, stock:500, category:'Roblox', emoji:'🤖',
     logo:'https://cdn.simpleicons.org/roblox/white',
     desc:'Premium Roblox accounts for all needs.', status:'active',
     options: [
@@ -1606,7 +1577,7 @@ const DEFAULT_PRODUCTS = [
     ]
   },
   {
-    id:15, name:'Store Accounts', price:5.00, stock:100, category:'Accounts', emoji:'🛍️',
+    id:14, name:'Store Accounts', price:5.00, stock:100, category:'Accounts', emoji:'🛍️',
     logo:'https://cdn.simpleicons.org/shopify/white',
     desc:'Retail accounts with balances.', status:'active',
     options: [
@@ -1623,7 +1594,7 @@ const DEFAULT_PRODUCTS = [
     ]
   },
   {
-    id:16, name:'TikTok Services', price:0.50, stock:999, category:'Social Media', emoji:'📈',
+    id:15, name:'TikTok Services', price:0.50, stock:999, category:'Social Media', emoji:'📈',
     logo:'https://cdn.simpleicons.org/tiktok/white',
     desc:'Boost your TikTok presence instantly.', status:'active',
     options: [
@@ -1639,7 +1610,7 @@ const DEFAULT_PRODUCTS = [
     ]
   },
   {
-    id:17, name:'Instagram Services', price:0.80, stock:999, category:'Social Media', emoji:'📸',
+    id:16, name:'Instagram Services', price:0.80, stock:999, category:'Social Media', emoji:'📸',
     logo:'https://cdn.simpleicons.org/instagram/white',
     desc:'Fast growth for your Instagram profile.', status:'active',
     options: [
@@ -1648,25 +1619,24 @@ const DEFAULT_PRODUCTS = [
         choices: [
           { label: '1K Followers', value: 'followers', price: 3.00 },
           { label: '1K Likes', value: 'likes', price: 1.50 },
-          { label: '10K Views', value: 'views_10k', price: 6.00 }
+          { label: '1K Reels Views', value: 'reels', price: 0.80 }
         ]
       }
     ]
   },
   {
-    id:18, name:'Discord Accounts', price:5.00, stock:100, category:'Discord', emoji:'👤',
+    id:17, name:'Discord Accounts', price:5.00, stock:100, category:'Discord', emoji:'👤',
     logo:'https://cdn.simpleicons.org/discord/white',
     desc:'Verified Discord accounts (EV).', status:'active'
   },
   {
-    id:19, name:'Digital Tools', price:10.00, stock:999, category:'Tools', emoji:'💻',
-    logo:'https://cdn.simpleicons.org/visualstudiocode/white',
-    desc:'Powerful software and generators (Lifetime).', status:'active',
+    id:18, name:'Discord Bots/Tools', price:5.00, stock:999, category:'Discord', emoji:'🛠️',
+    logo:'https://cdn.simpleicons.org/discord/white',
+    desc:'Powerful tools for Discord management.', status:'active',
     options: [
       {
         name: 'Type',
         choices: [
-          { label: 'Amazon Generator', value: 'amazon_gen', price: 15.00 },
           { label: 'EV Token Generator', value: 'token_gen', price: 20.00 },
           { label: 'Server Cloner', value: 'cloner', price: 10.00 },
           { label: 'Status Rotator', value: 'rotator', price: 5.00 }
@@ -1679,9 +1649,9 @@ const DEFAULT_PRODUCTS = [
 function loadProducts() {
   try {
     const version = localStorage.getItem('snow_consolidated');
-    if (version !== 'v4') {
+    if (version !== 'v5') {
       localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-      localStorage.setItem('snow_consolidated', 'v4');
+      localStorage.setItem('snow_consolidated', 'v5');
       return DEFAULT_PRODUCTS;
     }
     const saved = localStorage.getItem('snow_products');
