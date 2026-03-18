@@ -1610,16 +1610,16 @@ const DEFAULT_PRODUCTS = [
     ]
   },
   {
-    id:16, name:'Instagram Services', price:0.80, stock:999, category:'Social Media', emoji:'📸',
+    id:16, name:'Instagram Services', price:3.00, stock:999, category:'Social Media', emoji:'📸',
     logo:'https://cdn.simpleicons.org/instagram/white',
     desc:'Fast growth for your Instagram profile.', status:'active',
     options: [
       {
         name: 'Type',
         choices: [
-          { label: '1K High-Quality Followers', value: 'followers', price: 3.00 },
-          { label: '1K High-Quality Likes', value: 'likes', price: 1.50 },
-          { label: '1K High-Quality Reels Views', value: 'reels', price: 0.80 }
+          { label: '1K High-Quality Followers', value: 'followers', price: 5.00 },
+          { label: '1K High-Quality Likes', value: 'likes', price: 3.00 },
+          { label: '1K High-Quality Views', value: 'views', price: 3.00 }
         ]
       }
     ]
@@ -1669,9 +1669,9 @@ const DEFAULT_PRODUCTS = [
 function loadProducts() {
   try {
     const version = localStorage.getItem('snow_consolidated');
-    if (version !== 'v10') {
+    if (version !== 'v11') {
       localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-      localStorage.setItem('snow_consolidated', 'v10');
+      localStorage.setItem('snow_consolidated', 'v11');
       return DEFAULT_PRODUCTS;
     }
     const saved = localStorage.getItem('snow_products');
