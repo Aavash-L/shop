@@ -794,15 +794,15 @@ const DEFAULT_PRODUCTS = [
     desc:'1 Month Access to ChatGPT Premium features.', status:'active'
   },
   {
-    id:12, name:'Gaming Accounts', price:15.00, stock:20, category:'Gaming', emoji:'🎮',
-    logo:'https://cdn.simpleicons.org/steam/white',
-    desc:'Full access gaming accounts.', status:'active',
+    id:12, name:'Gaming Deals', price:2.00, stock:20, category:'Gaming', emoji:'🎮',
+    logo:'https://api.iconify.design/simple-icons:steam.svg?color=white',
+    desc:'Premium gaming access and accounts.', status:'active',
     options: [
       {
         name: 'Type',
         choices: [
-          { label: 'Steam Account (FA)', value: 'steam_fa', price: 15.00 },
-          { label: 'Xbox Game Pass (1 Month)', value: 'xbox_1m', price: 4.00 }
+          { label: 'Steam Full Access (FA)', value: 'steam_fa', price: 2.00 },
+          { label: 'Xbox Game Pass (1 Month)', value: 'xbox_1m', price: 3.00 }
         ]
       }
     ]
@@ -890,6 +890,26 @@ const DEFAULT_PRODUCTS = [
         ]
       }
     ]
+  },
+  {
+    id:19, name:'NordVPN Access', price:10.00, stock:100, category:'Software', emoji:'🛡️',
+    logo:'https://api.iconify.design/simple-icons:nordvpn.svg?color=white',
+    desc:'Secure and private internet access.', status:'active',
+    options: [
+      {
+        name: 'Duration',
+        choices: [
+          { label: '6 Months Access', value: '6m', price: 10.00 },
+          { label: '1 Year Access', value: '1y', price: 18.00 },
+          { label: '2 Years Access', value: '2y', price: 28.00 }
+        ]
+      }
+    ]
+  },
+  {
+    id:20, name:'Amazon Generator', price:25.00, stock:50, category:'Software', emoji:'📦',
+    logo:'https://api.iconify.design/simple-icons:amazon.svg?color=white',
+    desc:'Powerful tool for Amazon-related tasks.', status:'active'
   }
 ];
 
@@ -926,10 +946,10 @@ let nextId = load('nextId', 20);
 
 // Force update products if the user approved the consolidation
 const version = localStorage.getItem('snow_consolidated');
-if (version !== 'v8') {
+if (version !== 'v9') {
   products = DEFAULT_PRODUCTS;
   localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-  localStorage.setItem('snow_consolidated', 'v8');
+  localStorage.setItem('snow_consolidated', 'v9');
 }
 
 // Force update settings for new handles
