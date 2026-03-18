@@ -1419,10 +1419,10 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Amount',
         choices: [
-          { label: '250 Members', value: 250, priceMap: { offline: 1.00, online: 2.00 } },
-          { label: '500 Members', value: 500, priceMap: { offline: 2.00, online: 4.00 } },
-          { label: '750 Members', value: 750, priceMap: { offline: 3.00, online: 6.00 } },
-          { label: '1000 Members', value: 1000, priceMap: { offline: 4.00, online: 8.00 } }
+          { label: '250 High-Quality Members', value: 250, priceMap: { offline: 1.00, online: 2.00 } },
+          { label: '500 High-Quality Members', value: 500, priceMap: { offline: 2.00, online: 4.00 } },
+          { label: '750 High-Quality Members', value: 750, priceMap: { offline: 3.00, online: 6.00 } },
+          { label: '1000 High-Quality Members', value: 1000, priceMap: { offline: 4.00, online: 8.00 } }
         ]
       }
     ]
@@ -1435,9 +1435,9 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Duration',
         choices: [
-          { label: '1 Month', value: '1m', price: 15.00 },
-          { label: '2 Months', value: '2m', price: 23.00 },
-          { label: '3 Months', value: '3m', price: 30.00 }
+          { label: '1 Month (14x Boosts)', value: '1m', price: 15.00 },
+          { label: '2 Months (14x Boosts)', value: '2m', price: 23.00 },
+          { label: '3 Months (14x Boosts)', value: '3m', price: 30.00 }
         ]
       }
     ]
@@ -1499,9 +1499,9 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Duration',
         choices: [
-          { label: '1 Month', value: '1m', price: 2.00 },
-          { label: '3 Months', value: '3m', price: 5.00 },
-          { label: 'Lifetime', value: 'life', price: 8.00 }
+          { label: '1 Month Access', value: '1m', price: 2.00 },
+          { label: '3 Months Access', value: '3m', price: 5.00 },
+          { label: 'Lifetime Access', value: 'life', price: 8.00 }
         ]
       }
     ]
@@ -1514,9 +1514,9 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Duration',
         choices: [
-          { label: '1 Month', value: '1m', price: 1.50 },
-          { label: '3 Months', value: '3m', price: 3.00 },
-          { label: 'Lifetime', value: 'life', price: 5.00 }
+          { label: '1 Month Premium', value: '1m', price: 1.50 },
+          { label: '3 Months Premium', value: '3m', price: 3.00 },
+          { label: 'Lifetime Premium', value: 'life', price: 5.00 }
         ]
       }
     ]
@@ -1529,9 +1529,9 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Duration',
         choices: [
-          { label: '1 Month', value: '1m', price: 1.98 },
-          { label: '2 Months', value: '2m', price: 3.98 },
-          { label: 'Lifetime', value: 'life', price: 5.98 }
+          { label: '1 Month Access', value: '1m', price: 1.98 },
+          { label: '2 Months Access', value: '2m', price: 3.98 },
+          { label: 'Lifetime Access', value: 'life', price: 5.98 }
         ]
       }
     ]
@@ -1601,10 +1601,10 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Type',
         choices: [
-          { label: '1K Views', value: '1k_views', price: 0.50 },
-          { label: '10K Views', value: '10k_views', price: 4.00 },
-          { label: '1K Likes', value: '1k_likes', price: 2.00 },
-          { label: '1K Followers', value: '1k_followers', price: 5.00 }
+          { label: '1K High-Quality Views', value: '1k_views', price: 0.50 },
+          { label: '10K High-Quality Views', value: '10k_views', price: 4.00 },
+          { label: '1K High-Quality Likes', value: '1k_likes', price: 2.00 },
+          { label: '1K High-Quality Followers', value: '1k_followers', price: 5.00 }
         ]
       }
     ]
@@ -1617,9 +1617,9 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Type',
         choices: [
-          { label: '1K Followers', value: 'followers', price: 3.00 },
-          { label: '1K Likes', value: 'likes', price: 1.50 },
-          { label: '1K Reels Views', value: 'reels', price: 0.80 }
+          { label: '1K High-Quality Followers', value: 'followers', price: 3.00 },
+          { label: '1K High-Quality Likes', value: 'likes', price: 1.50 },
+          { label: '1K High-Quality Reels Views', value: 'reels', price: 0.80 }
         ]
       }
     ]
@@ -1649,9 +1649,9 @@ const DEFAULT_PRODUCTS = [
 function loadProducts() {
   try {
     const version = localStorage.getItem('snow_consolidated');
-    if (version !== 'v7') {
+    if (version !== 'v8') {
       localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-      localStorage.setItem('snow_consolidated', 'v7');
+      localStorage.setItem('snow_consolidated', 'v8');
       return DEFAULT_PRODUCTS;
     }
     const saved = localStorage.getItem('snow_products');
