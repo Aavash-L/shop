@@ -1538,12 +1538,12 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:10, name:'CapCut Lifetime', price:6.00, stock:50, category:'Software', emoji:'✂️',
-    logo:'https://cdn.simpleicons.org/capcut/white',
+    logo:'https://api.iconify.design/simple-icons:capcut.svg?color=white',
     desc:'Permanent access to CapCut Pro features.', status:'active'
   },
   {
     id:11, name:'ChatGPT Access', price:3.00, stock:100, category:'Software', emoji:'🤖',
-    logo:'https://cdn.simpleicons.org/openai/white',
+    logo:'https://api.iconify.design/simple-icons:openai.svg?color=white',
     desc:'1 Month Access to ChatGPT Premium features.', status:'active'
   },
   {
@@ -1649,9 +1649,9 @@ const DEFAULT_PRODUCTS = [
 function loadProducts() {
   try {
     const version = localStorage.getItem('snow_consolidated');
-    if (version !== 'v6') {
+    if (version !== 'v7') {
       localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-      localStorage.setItem('snow_consolidated', 'v6');
+      localStorage.setItem('snow_consolidated', 'v7');
       return DEFAULT_PRODUCTS;
     }
     const saved = localStorage.getItem('snow_products');
