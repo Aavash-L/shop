@@ -815,10 +815,10 @@ const DEFAULT_PRODUCTS = [
       {
         name: 'Type',
         choices: [
-          { label: 'VC Account', value: 'vc', price: 10.00 },
-          { label: 'Aged Account', value: 'aged', price: 8.00 },
-          { label: 'ALT Account', value: 'alt', price: 2.00 },
-          { label: 'Bulk Accounts', value: 'bulk', price: 15.00 }
+          { label: 'Roblox VC Account', value: 'vc', price: 2.97 },
+          { label: 'Aged Roblox Account ($0.15 - $5.97)', value: 'aged', price: 0.15 },
+          { label: 'Roblox Account (ALT)', value: 'alt', price: 0.45 },
+          { label: 'Roblox Bulk Accounts [Unchecked] ($2.37 - $2.97)', value: 'bulk', price: 2.37 }
         ]
       }
     ]
@@ -946,10 +946,10 @@ let nextId = load('nextId', 20);
 
 // Force update products if the user approved the consolidation
 const version = localStorage.getItem('snow_consolidated');
-if (version !== 'v9') {
+if (version !== 'v10') {
   products = DEFAULT_PRODUCTS;
   localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-  localStorage.setItem('snow_consolidated', 'v9');
+  localStorage.setItem('snow_consolidated', 'v10');
 }
 
 // Force update settings for new handles
