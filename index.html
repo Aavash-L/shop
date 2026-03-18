@@ -1538,7 +1538,7 @@ const DEFAULT_PRODUCTS = [
   },
   {
     id:10, name:'CapCut Lifetime', price:6.00, stock:50, category:'Software', emoji:'✂️',
-    logo:'https://upload.wikimedia.org/wikipedia/commons/2/2a/Capcut-logo.svg',
+    logo:'https://cdn.simpleicons.org/capcut/white',
     desc:'Permanent access to CapCut Pro features.', status:'active'
   },
   {
@@ -1649,9 +1649,9 @@ const DEFAULT_PRODUCTS = [
 function loadProducts() {
   try {
     const version = localStorage.getItem('snow_consolidated');
-    if (version !== 'v5') {
+    if (version !== 'v6') {
       localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-      localStorage.setItem('snow_consolidated', 'v5');
+      localStorage.setItem('snow_consolidated', 'v6');
       return DEFAULT_PRODUCTS;
     }
     const saved = localStorage.getItem('snow_products');
