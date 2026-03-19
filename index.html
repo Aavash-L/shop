@@ -1684,15 +1684,28 @@ const DEFAULT_PRODUCTS = [
     id:20, name:'Amazon Generator', price:25.00, stock:50, category:'Software', emoji:'📦',
     logo:'https://api.iconify.design/simple-icons:amazon.svg?color=white',
     desc:'Powerful tool for Amazon-related tasks.', status:'active'
+  },
+  {
+    id:21, name:'Card Services', price:70.00, stock:100, category:'Accounts', emoji:'💳',
+    desc:'debit & credit options available. Includes necessary setup details for activation. Fast delivery • Secure process • Support included', status:'active',
+    options: [
+      {
+        name: 'Type',
+        choices: [
+          { label: 'Debit Card', value: 'debit', price: 70.00 },
+          { label: 'Credit Card', value: 'credit', price: 70.00 }
+        ]
+      }
+    ]
   }
 ];
 
 function loadProducts() {
   try {
     const version = localStorage.getItem('snow_consolidated');
-    if (version !== 'v11') {
+    if (version !== 'v12') {
       localStorage.setItem('snow_products', JSON.stringify(DEFAULT_PRODUCTS));
-      localStorage.setItem('snow_consolidated', 'v11');
+      localStorage.setItem('snow_consolidated', 'v12');
       return DEFAULT_PRODUCTS;
     }
     const saved = localStorage.getItem('snow_products');
